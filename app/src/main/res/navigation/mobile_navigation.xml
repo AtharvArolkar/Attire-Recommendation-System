@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.clothme.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_add_wardrobe"
+        android:name="com.example.clothme.ui.AddWardrobe.GalleryFragment"
+        android:label="Add Wardrobe"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_show_wardrobe"
+        android:name="com.example.clothme.ui.DisplayWardrobe.SlideshowFragment"
+        android:label="My Wardrobe"
+        tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_fetch_outfit"
+        android:name="com.example.clothme.Fragments.FetchOutfit"
+        android:label="Grab Outfit"
+        tools:layout="@layout/fragment_fetch_outfit" />
+    <fragment
+        android:id="@+id/nav_history"
+        android:name="com.example.clothme.Fragments.OutfitHistory"
+        android:label="Outfit History"
+        tools:layout="@layout/fragment_outfit_history" />
+</navigation>
