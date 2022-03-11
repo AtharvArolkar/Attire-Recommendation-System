@@ -35,13 +35,14 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.clothme.Adapter.ImageAdapter;
 import com.example.clothme.Adapter.ImageAdapterAdd;
 import com.example.clothme.ClothMeNav;
+import com.example.clothme.Color.ColorDetector;
 import com.example.clothme.Database.ClothesDB;
 import com.example.clothme.MainActivity;
 import com.example.clothme.Models.ImageModel;
 import com.example.clothme.Models.UserModel;
 import com.example.clothme.R;
 import com.example.clothme.databinding.FragmentGalleryBinding;
-import com.example.clothme.ml.Female86;
+import com.example.clothme.ml.Female91;
 import com.example.clothme.ml.Male96Pool;
 
 import org.tensorflow.lite.DataType;
@@ -79,14 +80,18 @@ public class GalleryFragment extends Fragment {
     ClothesDB clothdb;
     public ArrayList<ImageModel> images = new ArrayList<>();
 
-    String[] menlabels = new String[]{"Blazers", "Innerwear Vests", "Jackets", "Jeans", "Kurtas", "Long Sleeves Shirt", "Lounge Pants", "Pajama",
-            "Sherwanis", "Shirts", "Shorts", "Sweaters", "Track Pants", "Tracksuits", "Trousers", "Tshirts"};
+//    String[] menlabels = new String[]{"Blazers","Innerwear Vests","Jackets","Jeans","Long Sleeves Shirt","Lounge Pants","Shirts",
+//            "Shorts","Sweaters","Track Pants","Trousers","T-Shirts"};
 
-    String[] womenlabels = new String[]{"Jackets", "Pants", "Shorts", "Skirts", "Tank Tops", "Tops", "Blazers", "Jeans", "Jeans", "Capri & Cropped Pants",
-            "Cardigans", "Churidar", "Coats", "Dresses", "Dresses", "Dresses", "Jeans", "Gowns", "Hoodies", "Jackets", "Jeans", "Jumpsuits", "Skirts",
-            "Leggings", "Long Skirts", "Mini Skirts", "Pajamas", "Pants", "Shirts", "Shorts", "Jeans", "Skirts", "Jeans", "Suits",
-            "Sweaters", "Sweatshirts", "T-Shirts", "Tank Tops", "Tights", "Tops", "Tunics", "Vests", "Wide Leg Jeans", "dhoti_pants", "lehenga",
-            "palazzos", "saree"};
+    String[] menlabels = new String[]{"Blazers", "Innerwear Vests", "Jackets", "Jeans", "Shirt", "Long Sleeves Shirt", "Lounge Pants", "Pajama",
+            "Sherwanis", "Shirt", "Shorts", "Sweaters", "Track Pants", "Tracksuits", "Trousers", "T-Shirts"};
+
+
+
+
+    String[] womenlabels=new String[]{"Jackets","Pants","Shorts","Skirts","Tank Tops","Tops", "Blazers","Capri & Cropped Pants","Cardigans","Coats",
+            "Dresses","Dresses","Dresses","Gowns","Hoodies","Jackets","Jeans","Jumpsuits", "Skirts","Leggings","Skirts","Skirts","Pants","Shirts","Shorts",
+            "Skirts","Suits","Sweaters","Sweatshirts","T-Shirts","Tank Tops","Tights","Tops","Vests"};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -181,62 +186,72 @@ public class GalleryFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         path=null;
-        if (requestCode == ReqCode && resultCode == Activity.RESULT_OK && data != null) {
-            path = data.getData();
-            try {
-                bitmapImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), path);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        }
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            Bundle extras = data.getExtras();
-            bitmapImage = (Bitmap) extras.get("data");
-            try {
-                path=saveImage(bitmapImage);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        im = new ImageModel();
-        im.setPic(bitmapImage);
-
-        Bitmap img = Bitmap.createScaledBitmap(bitmapImage, 256, 256, true);
-        im = modelEvaluate(im, img);
-        images.add(im);
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("What is the fabric of the cloth?");
-        builder.setIcon(R.drawable.logo);
-        builder.setCancelable(false);
-        options = new String[]{"Cotton", "Wool", "Nylon/Polyester", "Silk"};
-        final int[] checkedItem = {-1};
-        builder.setSingleChoiceItems(options, checkedItem[0], new DialogInterface.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                checkedItem[0] = which;
-
-                fabric= options[which];
-                Boolean success = clothdb.insertData(user.getUsername(), path, im.getName(), null, fabric);
-                if (success) {
-                    Toast.makeText(getContext(), "Inserted Successfully", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "Failed To Insert", Toast.LENGTH_SHORT).show();
+        try {
+            if (requestCode == ReqCode && resultCode == Activity.RESULT_OK && data != null) {
+                path = data.getData();
+                try {
+                    bitmapImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), path);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog1 = builder.create();
-        dialog1.show();
 
-        ImageAdapterAdd adapter = new ImageAdapterAdd(images, getContext());
-        displayImages.setAdapter(adapter);
-        StaggeredGridLayoutManager staggered = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        displayImages.setLayoutManager(staggered);
+            }
+            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+                Bundle extras = data.getExtras();
+                bitmapImage = (Bitmap) extras.get("data");
+                try {
+                    path = saveImage(bitmapImage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            im = new ImageModel();
+            im.setPic(bitmapImage);
+
+            Bitmap img = Bitmap.createScaledBitmap(bitmapImage, 256, 256, true);
+            im = modelEvaluate(im, img);
+            images.add(im);
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("What is the fabric of the cloth?");
+            builder.setIcon(R.drawable.logo);
+            builder.setCancelable(false);
+            options = new String[]{"Cotton", "Wool", "Nylon/Polyester", "Silk"};
+            final int[] checkedItem = {-1};
+            builder.setSingleChoiceItems(options, checkedItem[0], new DialogInterface.OnClickListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    checkedItem[0] = which;
+
+                    fabric = options[which];
+                    ColorDetector cd = new ColorDetector();
+                    String color = cd.getColor(img);
+                    if(color=="NULL"){
+                        Toast.makeText(getContext(),"Cant Detect Color, Plz Add Manually",Toast.LENGTH_LONG).show();
+                    }
+                    Boolean success = clothdb.insertData(user.getUsername(), path, im.getName(), color, fabric);
+                    if (success) {
+                        Toast.makeText(getContext(), "Inserted Successfully", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "Failed To Insert", Toast.LENGTH_SHORT).show();
+                    }
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog dialog1 = builder.create();
+            dialog1.show();
+
+            ImageAdapterAdd adapter = new ImageAdapterAdd(images, getContext());
+            displayImages.setAdapter(adapter);
+            StaggeredGridLayoutManager staggered = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+            displayImages.setLayoutManager(staggered);
+        }catch (NullPointerException e){
+            Toast.makeText(getContext(),"Image Not Captured",Toast.LENGTH_SHORT).show();
+        }
+
 
 
     }
@@ -267,13 +282,13 @@ public class GalleryFragment extends Fragment {
                 }
                 im.setText(menlabels[index]);
             } else if (gender.equals("Female")) {
-                Female86 model = Female86.newInstance(getContext());
+                Female91 model = Female91.newInstance(getContext());
                 TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 256, 256, 3}, DataType.FLOAT32);
                 TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
                 tensorImage.load(img);
                 ByteBuffer byteBuffer = tensorImage.getBuffer();
                 inputFeature0.loadBuffer(byteBuffer);
-                Female86.Outputs outputs = model.process(inputFeature0);
+                Female91.Outputs outputs = model.process(inputFeature0);
                 TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
                 model.close();
                 float[] out = outputFeature0.getFloatArray();

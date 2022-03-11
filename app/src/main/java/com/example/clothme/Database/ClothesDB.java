@@ -26,11 +26,11 @@ public class ClothesDB extends SQLiteOpenHelper {
     public static final String dbname = "database.db";
     public static final String TABLE_NAME = "clothesimage";
     public static final String TABLE_NAME_PARENT = "Accounts";
-    String[] TopWear = new String[]{"Tshirts", "Kurtas", "Suits", "Coats", "Cardigans", "Sweatshirts", "Vests", "Tops", "Hoodies", "Sweaters", "Shirts", "Sherwanis",
-            "Jackets", "Innerwear Vests", "Tank Tops", "Gowns", "saree", "Churidar", "Dresses", "Jumpsuits", "Blazers", "T-Shirts", "Tunics", "Long Sleeves Shirt"};
+    String[] TopWear = new String[]{"Blazers","Cardigans","Jumpsuits","Tracksuits","T-Shirts","Tops","Shirts","Long Sleeves Shirt",
+            "Innerwear Vests","Tank Tops","Hoodies","Suits","Shirt","Dresses","Gowns","Coats","Sherwanis","Jackets","Sweaters","Sweatshirts","Vests"};
 
-    String[] BottomWear = new String[]{"dhoti_pants", "Lounge Pants", "Tracksuits", "Shirts", "Long Skirts", "Tights", "Shorts", "Knee Length Skirts", "Pajama",
-            "Mini Skirts", "Capri & Cropped Pants", "Jeans", "Pants", "Skirts", "Leggings", "Track Pants", "Pajamas", "palazzos", "Trousers"};
+
+    String[] BottomWear = new String[]{"Pajama","Capri & Cropped Pants","Track Pants","Jeans","Tights","Shorts","Skirts","Lounge Pants","Trousers","Pants","Leggings"};
 
     public ClothesDB(@Nullable Context context) {
         super(context, dbname, null, 1);
@@ -71,8 +71,6 @@ public class ClothesDB extends SQLiteOpenHelper {
         } else {
             return true;
         }
-
-
     }
 
     public ArrayList<ImageModel> getImage(String username, String category, Context context) {
