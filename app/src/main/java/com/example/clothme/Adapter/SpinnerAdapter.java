@@ -47,17 +47,21 @@ public class SpinnerAdapter extends BaseAdapter {
         TextView tv=(TextView)convertView.findViewById(android.R.id.text1);
         Color c=new Color();
         String colorText=colors[position];
-        Integer [] rgb=color.get(colorText);
-        int r=rgb[0];
-        int g=rgb[1];
-        int b=rgb[2];
-        String ResId ="R.color."+colorText;
+        if(colorText!="NULL") {
+            Integer[] rgb = color.get(colorText);
+            int r = rgb[0];
+            int g = rgb[1];
+            int b = rgb[2];
+            tv.setBackgroundColor(Color.rgb(r,g,b)) ;
+        }else{
+            tv.setTextColor(Color.rgb(255,255,255));
+        }
 //        tv.setBackgroundColor((int)Integer.parseInt(ResId)) ;
 //
-         tv.setBackgroundColor(Color.rgb(r,g,b)) ;
-        if(colorText=="NULL") {
-            tv.setTextColor(Color.rgb(0,0,0));
-        }
+
+//        if(colorText=="NULL") {
+//
+//        }
 
         tv.setText(colorText);
         return convertView;

@@ -246,7 +246,7 @@ public class GalleryFragment extends Fragment {
                         fabric = options[which];
                         ColorDetector cd = new ColorDetector();
                         String color = cd.getColor(img);
-                        if(color=="NULL"){
+                        if(color== null){
                             Toast.makeText(getContext(),"Cant Detect Color, Plz Add Manually",Toast.LENGTH_LONG).show();
                         }
                         Toast.makeText(getContext(),""+color,Toast.LENGTH_LONG).show();

@@ -32,9 +32,18 @@ public class View_Wardrobe extends AppCompatActivity {
             "Innerwear Vests","Tank Tops","Hoodies","Suits","Shirt","Dresses","Gowns","Coats","Sherwanis","Jackets","Sweaters",
             "Sweatshirts","Vests","Pajama","Capri & Cropped Pants","Track Pants","Jeans","Tights","Shorts","Skirts","Lounge Pants","Trousers","Pants","Leggings"};
     String[] FabricCat = new String[]{"Cotton", "Wool", "Nylon/Polyester", "Silk",};
-    String[] ColorCat = new String[]{"Brown","Dark Khaki","White_2","Apricot","White_3","White_4","Orange","White_1","Lime","Beige","Teal","Maroon","Cyan",
-            "Violet","Blue_1","Blue","Mint","Grey_6","Magenta","Grey_4","Grey_5","Navy Blue","Grey_2","Grey_3","Grey_1","Red","Olive","Dark Green","Pink",
-            "Khaki","Yellow","Purple","Black_4","Black_5","Black_6","Black_7","Black_1","Green","Black_2","Black_3","NULL"};
+    String[] ColorCat = new String[]{"NULL","MediumOrchid","PaleGoldenRod","Black","DarkSeaGreen","LightSlateGray","Sienna","Gainsboro","LightCoral","Orange","DarkSlateGray",
+            "DodgerBlue","Aquamarine","LightSeaGreen","Beige","RoyalBlue","DarkViolet","MediumSlateBlue","OliveDrab","MidnightBlue","SandyBrown","Violet",
+            "LimeGreen","Magenta","PowderBlue","DarkSlateBlue","DeepSkyBlue","DarkTurquoise","Chartreuse","Olive","IndianRed","LightGray","PeachPuff",
+            "MediumPurple","Yellow","LightBlue","Indigo","SpringGreen","DarkRed","Peru","Wheat","RosyBrown","MediumAquaMarine","DarkCyan","FireBrick",
+            "LawnGreen","OrangeRed","DarkOrange","Teal","Turquoise","SeaShell","HoneyDew","Maroon","Cyan","Blue","Moccasin","Chocolate","WhiteSmoke",
+            "LightGoldenRodYellow","MediumSeaGreen","SeaGreen","Thistle","LavenderBlush","LightCyan","Red","SlateGray","MistyRose","Crimson","NavajoWhite",
+            "SlateBlue","Orchid","Tan","LightSalmon","DarkGray","Snow","DarkBlue","Fuchsia","Tomato","Plum","Cornsilk","PaleGreen","YellowGreen","MintCream",
+            "PaleVioletRed","DimGray","Gold","Azure","DarkOliveGreen","Gray","Salmon","LemonChiffon","FloralWhite","BlanchedAlmond","GreenYellow","Silver",
+            "Khaki","Pink","Ivory","LightSkyBlue","AliceBlue","DarkGreen","DarkSalmon","PapayaWhip","Linen","LightGreen","MediumTurquoise","AntiqueWhite",
+            "Brown","LightPink","OldLace","Aqua","DarkGoldenRod","Bisque","CadetBlue","BurlyWood","MediumBlue","BlueViolet","Lime","Lavender","CornflowerBlue",
+            "LightSteelBlue","GhostWhite","SteelBlue","MediumSpringGreen","DarkKhaki","PaleTurquoise","ForestGreen","DarkOrchid","DeepPink","MediumVioletRed",
+            "HotPink","LightYellow","Navy","SaddleBrown","White","Coral","Purple","DarkMagenta","GoldenRod","Green","SkyBlue"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
