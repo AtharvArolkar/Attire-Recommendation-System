@@ -201,7 +201,13 @@ public class GalleryFragment extends Fragment {
         try {
             if (requestCode == ReqCode && resultCode == Activity.RESULT_OK && data != null) {
                 path = data.getData();
+//                bitmapImage = ;
                 ImageCropFunction(path);
+//                try {
+//                    bitmapImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), path);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
             }
             if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
                 Bundle extras = data.getExtras();
@@ -222,11 +228,13 @@ public class GalleryFragment extends Fragment {
                     img = Bitmap.createScaledBitmap(bitmapImage, 256, 256, true);
                     im = modelEvaluate(im, img);
                     images.add(im);
+
                     try{
-                        ContentResolver resolver=getContext().getContentResolver();
-                        OutputStream op=resolver.openOutputStream(path);
-                        bitmapImage.compress(Bitmap.CompressFormat.JPEG,100,op);
-                        Objects.requireNonNull(op);
+                        path=saveImage(bitmapImage);
+//                        ContentResolver resolver=getContext().getContentResolver();
+//                        OutputStream op=resolver.openOutputStream(path);
+//                        bitmapImage.compress(Bitmap.CompressFormat.JPEG,100,op);
+//                        Objects.requireNonNull(op);
                     }catch(Exception e){
                         e.printStackTrace();
                     }
