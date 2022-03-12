@@ -18,6 +18,7 @@ import com.example.clothme.Models.ClothesModel;
 import com.example.clothme.Models.ImageModel;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,6 +86,10 @@ public class ClothesDB extends SQLiteOpenHelper {
                     im.setText(cursor.getString(2));
 //                    byte[] img = cursor.getBlob(1);
                     Uri imageUri = Uri.parse(cursor.getString(1));
+//                    File f=new File(imageUri.getPath());
+//                    if(f.exists()){
+//
+//                    }
                     Bitmap image = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imageUri);
                     im.setPic(image);
                     if (cursor.getString(5).equals(category)) {
@@ -99,7 +104,6 @@ public class ClothesDB extends SQLiteOpenHelper {
         MyDB.close();
         return images;
     }
-
     public ClothesModel getCloth(String username, String Clothtype, int position) {
         SQLiteDatabase db = this.getReadableDatabase();//
         String cat = null;

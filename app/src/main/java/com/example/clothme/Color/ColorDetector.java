@@ -114,30 +114,47 @@ public class ColorDetector {
     public String getColor(Bitmap image){
         int height = image.getHeight();
         int width = image.getWidth();
-        Map m = new HashMap();
-        for(int i=0; i < width ; i++)
-        {
-            for(int j=0; j < height ; j++)
-            {
+//        Map m = new HashMap();
+//        for(int i=0; i < width ; i++)
+//        {
+//            for(int j=0; j < height ; j++)
+//            {
+//                int rgb = image.getPixel(i, j);
+//                int[] rgbArr = getRGBArr(rgb);
+//                // Filter out grays....
+//                if (!isGray(rgbArr)) {
+//                    Integer counter = (Integer) m.get(rgb);
+//                    if (counter == null)
+//                        counter = 0;
+//                    counter++;
+//                    m.put(rgb, counter);
+//                }
+//            }
+//        }
+        Map<Integer, Integer> colorMap = new HashMap<>();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
                 int rgb = image.getPixel(i, j);
-                int[] rgbArr = getRGBArr(rgb);
-                // Filter out grays....
-                if (!isGray(rgbArr)) {
-                    Integer counter = (Integer) m.get(rgb);
-                    if (counter == null)
+                if (!isGray(getRGBArr(rgb))) {
+                    Integer counter = colorMap.get(rgb);
+                    if (counter == null) {
                         counter = 0;
-                    counter++;
-                    m.put(rgb, counter);
+                    }
+
+                    colorMap.put(rgb, ++counter);
                 }
             }
         }
+
+//        return getMostCommonColor(colorMap);
+        int[] rgb=null;
         String color=null;
         try {
-            int[] rgb = getMostCommonColour(m);
+            rgb = getMostCommonColor(colorMap);
             int min=100000;
             for(String key :colorDict.keySet() ){
                 Integer[] a=colorDict.get(key);
-                int Euclidean=(int)Math.sqrt(Math.pow(((rgb[0]-a[0])*0.3),2)+Math.pow(((rgb[1]-a[1])*0.59),2)+Math.pow(((rgb[1]-a[1])*0.11),2));
+                int Euclidean=(int)Math.sqrt(Math.pow(((rgb[0]-a[0])*0.3),2)+Math.pow(((rgb[1]-a[1])*0.59),2)+Math.pow(((rgb[2]-a[2])*0.11),2));
                 if(Euclidean<min){
                     min=Euclidean;
                     color=key;
@@ -164,37 +181,81 @@ public class ColorDetector {
 //        return (rgb[0]+","+rgb[1]+","+rgb[2]);
         return color;
     }
-    public static int[] getMostCommonColour(Map map) {
-        List list = new LinkedList(map.entrySet());
-        Collections.sort(list, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o1)).getValue())
-                        .compareTo(((Map.Entry) (o2)).getValue());
-            }
-        });
-        Map.Entry me = (Map.Entry )list.get(list.size()-1);
-        int[] rgb= getRGBArr((Integer)me.getKey());
-//        return Integer.toHexString(rgb[0])+" "+Integer.toHexString(rgb[1])+" "+Integer.toHexString(rgb[2]);
+
+
+
+    private static int[] getMostCommonColor(Map<Integer, Integer> map) {
+        List<Map.Entry<Integer, Integer>> list = new LinkedList<>(map.entrySet());
+
+        Collections.sort(list, (Map.Entry<Integer, Integer> obj1, Map.Entry<Integer, Integer> obj2)
+                -> ((Comparable) obj1.getValue()).compareTo(obj2.getValue()));
+
+        Map.Entry<Integer, Integer> entry = list.get(list.size() - 1);
+        int[] rgb = getRGBArr(entry.getKey());
         return rgb;
+//        return "#" + Integer.toHexString(rgb[0])
+//                + Integer.toHexString(rgb[1])
+//                + Integer.toHexString(rgb[2]);
     }
 
-    public static int[] getRGBArr(int pixel) {
+    private static int[] getRGBArr(int pixel) {
         int alpha = (pixel >> 24) & 0xff;
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
         int blue = (pixel) & 0xff;
-        return new int[]{red,green,blue};
 
+        return new int[]{red, green, blue};
     }
-    public static boolean isGray(int[] rgbArr) {
+
+    private static boolean isGray(int[] rgbArr) {
         int rgDiff = rgbArr[0] - rgbArr[1];
         int rbDiff = rgbArr[0] - rgbArr[2];
         // Filter out black, white and grays...... (tolerance within 10 pixels)
         int tolerance = 10;
-        if (rgDiff > tolerance || rgDiff < -tolerance)
+        if (rgDiff > tolerance || rgDiff < -tolerance) {
             if (rbDiff > tolerance || rbDiff < -tolerance) {
                 return false;
             }
+        }
         return true;
     }
+
+
+
+
+
+
+//    public static int[] getMostCommonColour(Map map) {
+//        List list = new LinkedList(map.entrySet());
+//        Collections.sort(list, new Comparator() {
+//            public int compare(Object o1, Object o2) {
+//                return ((Comparable) ((Map.Entry) (o1)).getValue())
+//                        .compareTo(((Map.Entry) (o2)).getValue());
+//            }
+//        });
+//        Map.Entry me = (Map.Entry )list.get(list.size()-1);
+//        int[] rgb= getRGBArr((Integer)me.getKey());
+////        return Integer.toHexString(rgb[0])+" "+Integer.toHexString(rgb[1])+" "+Integer.toHexString(rgb[2]);
+//        return rgb;
+//    }
+//
+//    public static int[] getRGBArr(int pixel) {
+//        int alpha = (pixel >> 24) & 0xff;
+//        int red = (pixel >> 16) & 0xff;
+//        int green = (pixel >> 8) & 0xff;
+//        int blue = (pixel) & 0xff;
+//        return new int[]{red,green,blue};
+//
+//    }
+//    public static boolean isGray(int[] rgbArr) {
+//        int rgDiff = rgbArr[0] - rgbArr[1];
+//        int rbDiff = rgbArr[0] - rgbArr[2];
+//        // Filter out black, white and grays...... (tolerance within 10 pixels)
+//        int tolerance = 10;
+//        if (rgDiff > tolerance || rgDiff < -tolerance)
+//            if (rbDiff > tolerance || rbDiff < -tolerance) {
+//                return false;
+//            }
+//        return true;
+//    }
 }

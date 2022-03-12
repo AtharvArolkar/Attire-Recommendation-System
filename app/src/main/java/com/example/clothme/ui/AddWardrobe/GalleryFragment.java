@@ -32,7 +32,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.example.clothme.Adapter.ImageAdapter;
 import com.example.clothme.Adapter.ImageAdapterAdd;
 import com.example.clothme.ClothMeNav;
 import com.example.clothme.Color.ColorDetector;
@@ -77,6 +76,7 @@ public class GalleryFragment extends Fragment {
     public static String[] options;
     public static ImageModel im;
     public static Uri path;
+    public static Bitmap img;
     ClothesDB clothdb;
     public ArrayList<ImageModel> images = new ArrayList<>();
 
@@ -153,8 +153,6 @@ public class GalleryFragment extends Fragment {
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-
-
             }
         });
         done.setOnClickListener(new View.OnClickListener() {
@@ -164,37 +162,46 @@ public class GalleryFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         return root;
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
-
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         } catch (ActivityNotFoundException e) {
+//            Toast.makeText(getContext(),"Image Not Captured",Toast.LENGTH_SHORT).show();
         }
     }
+    public void ImageCropFunction(Uri uri) {
 
+        // Image Crop Code
+        try {
+            Intent CropIntent = new Intent("com.android.camera.action.CROP");
+            Toast.makeText(getContext(),"plz, Crop the Required part",Toast.LENGTH_LONG).show();
+            CropIntent.setDataAndType(uri, "image/*");
+//
+            CropIntent.putExtra("crop", "true");
+            CropIntent.putExtra("outputX", 1024);
+            CropIntent.putExtra("outputY", 1024);
+            CropIntent.putExtra("return-data", true);
+            CropIntent.putExtra("return-uri", uri.toString());
+            startActivityForResult(CropIntent, 222);
+        }catch (ActivityNotFoundException e) {
+        }
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        path=null;
+//        path=null;
         try {
             if (requestCode == ReqCode && resultCode == Activity.RESULT_OK && data != null) {
                 path = data.getData();
-                try {
-                    bitmapImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), path);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+                ImageCropFunction(path);
             }
             if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
                 Bundle extras = data.getExtras();
@@ -204,58 +211,66 @@ public class GalleryFragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                ImageCropFunction(path);
             }
-
-            im = new ImageModel();
-            im.setPic(bitmapImage);
-
-            Bitmap img = Bitmap.createScaledBitmap(bitmapImage, 256, 256, true);
-            im = modelEvaluate(im, img);
-            images.add(im);
-
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("What is the fabric of the cloth?");
-            builder.setIcon(R.drawable.logo);
-            builder.setCancelable(false);
-            options = new String[]{"Cotton", "Wool", "Nylon/Polyester", "Silk"};
-            final int[] checkedItem = {-1};
-            builder.setSingleChoiceItems(options, checkedItem[0], new DialogInterface.OnClickListener() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    checkedItem[0] = which;
-
-                    fabric = options[which];
-                    ColorDetector cd = new ColorDetector();
-                    String color = cd.getColor(img);
-                    if(color=="NULL"){
-                        Toast.makeText(getContext(),"Cant Detect Color, Plz Add Manually",Toast.LENGTH_LONG).show();
+            if (requestCode == 222) {
+                if (data != null) {
+                    Bundle bundle = data.getExtras();
+                    bitmapImage = bundle.getParcelable("data");
+                    im = new ImageModel();
+                    im.setPic(bitmapImage);
+                    img = Bitmap.createScaledBitmap(bitmapImage, 256, 256, true);
+                    im = modelEvaluate(im, img);
+                    images.add(im);
+                    try{
+                        ContentResolver resolver=getContext().getContentResolver();
+                        OutputStream op=resolver.openOutputStream(path);
+                        bitmapImage.compress(Bitmap.CompressFormat.JPEG,100,op);
+                        Objects.requireNonNull(op);
+                    }catch(Exception e){
+                        e.printStackTrace();
                     }
-                    Boolean success = clothdb.insertData(user.getUsername(), path, im.getName(), color, fabric);
-                    if (success) {
-                        Toast.makeText(getContext(), "Inserted Successfully", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), "Failed To Insert", Toast.LENGTH_SHORT).show();
-                    }
-                    dialog.dismiss();
                 }
-            });
-            AlertDialog dialog1 = builder.create();
-            dialog1.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("What is the fabric of the cloth?");
+                builder.setIcon(R.drawable.logo);
+                builder.setCancelable(false);
+                options = new String[]{"Cotton", "Wool", "Nylon/Polyester", "Silk"};
+                final int[] checkedItem = {-1};
+                builder.setSingleChoiceItems(options, checkedItem[0], new DialogInterface.OnClickListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        checkedItem[0] = which;
 
-            ImageAdapterAdd adapter = new ImageAdapterAdd(images, getContext());
-            displayImages.setAdapter(adapter);
-            StaggeredGridLayoutManager staggered = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-            displayImages.setLayoutManager(staggered);
+                        fabric = options[which];
+                        ColorDetector cd = new ColorDetector();
+                        String color = cd.getColor(img);
+                        if(color=="NULL"){
+                            Toast.makeText(getContext(),"Cant Detect Color, Plz Add Manually",Toast.LENGTH_LONG).show();
+                        }
+                        Toast.makeText(getContext(),""+color,Toast.LENGTH_LONG).show();
+                        Boolean success = clothdb.insertData(user.getUsername(), path, im.getName(), color, fabric);
+                        if (success) {
+                            Toast.makeText(getContext(), "Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Failed To Insert", Toast.LENGTH_SHORT).show();
+                        }
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog1 = builder.create();
+                dialog1.show();
+//
+                ImageAdapterAdd adapter = new ImageAdapterAdd(images, getContext());
+                displayImages.setAdapter(adapter);
+                StaggeredGridLayoutManager staggered = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+                displayImages.setLayoutManager(staggered);
+            }
         }catch (NullPointerException e){
             Toast.makeText(getContext(),"Image Not Captured",Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
-
     public ImageModel modelEvaluate(ImageModel im, Bitmap img) {
         try {
             Context context;
@@ -308,7 +323,6 @@ public class GalleryFragment extends Fragment {
         }
         return im;
     }
-
     private Uri saveImage(Bitmap bitmap) throws IOException {
         Uri ImageCollection = null;
         ContentResolver resolver=getContext().getContentResolver();
@@ -344,7 +358,6 @@ public class GalleryFragment extends Fragment {
         );
         return checkPermission();
     }
-
     public Boolean checkPermission() {
         Boolean perm1, perm2;
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
