@@ -11,11 +11,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,11 +46,14 @@ import com.example.clothme.R;
 import com.example.clothme.databinding.FragmentGalleryBinding;
 import com.example.clothme.ml.Female91;
 import com.example.clothme.ml.Male96Pool;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.yalantis.ucrop.UCrop;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.image.TensorImage;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
@@ -103,56 +109,17 @@ public class GalleryFragment extends Fragment {
 
         clothdb = new ClothesDB(getActivity());
         gender = user.getGender();
-//        Intent i=getIntent();
-//        Bundle bundle=getIntent().getExtras();
-
-//        textName.setText("Hello "+user.getFname()+" "+user.getLname());
-
-
         displayImages = root.findViewById(R.id.displayImages);
         addClothes = root.findViewById(R.id.id_addPic);
         done = root.findViewById(R.id.id_doneUpload);
-//        Toast.makeText(getContext(),""+user.getUsername(),Toast.LENGTH_SHORT).show();
-//        images=clothdb.getImage(user.getUsername());
-//        Toast.makeText(getContext(),"sdsdsd",Toast.LENGTH_SHORT).show();
-//        ImageAdapter adapter=new ImageAdapter(images, getContext());
-//        displayImages.setAdapter(adapter);
-//        StaggeredGridLayoutManager staggered=new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
-//        displayImages.setLayoutManager(staggered);
-
         addClothes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle("Choose an Option");
-                builder.setIcon(R.drawable.logo);
-//                builder.setCancelable(false);
-                options = new String[]{"Camera", "Gallery"};
-                //Pass the array list in Alert dialog
-                builder.setItems(options, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                if (checkPermission()) {
-                                    dispatchTakePictureIntent();
-                                } else {
-                                    if (reqPerm()) {
-                                        dispatchTakePictureIntent();
-                                    } else {
-                                        Toast.makeText(getContext(), "You Have to Grant Permission in order to use this app", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                                break;
-                            case 1:
-                                Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                                startActivityForResult(gallery, ReqCode);
-                                break;
-                        }
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                ImagePicker.with(GalleryFragment.this)
+                        .crop()	    			//Crop image(Optional), Check Customization for more option
+                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start(2410);
             }
         });
         done.setOnClickListener(new View.OnClickListener() {
@@ -169,114 +136,62 @@ public class GalleryFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        } catch (ActivityNotFoundException e) {
-//            Toast.makeText(getContext(),"Image Not Captured",Toast.LENGTH_SHORT).show();
-        }
-    }
-    public void ImageCropFunction(Uri uri) {
-
-        // Image Crop Code
-        try {
-            Intent CropIntent = new Intent("com.android.camera.action.CROP");
-            Toast.makeText(getContext(),"plz, Crop the Required part",Toast.LENGTH_LONG).show();
-            CropIntent.setDataAndType(uri, "image/*");
-//
-            CropIntent.putExtra("crop", "true");
-            CropIntent.putExtra("outputX", 1024);
-            CropIntent.putExtra("outputY", 1024);
-            CropIntent.putExtra("return-data", true);
-            CropIntent.putExtra("return-uri", uri.toString());
-            startActivityForResult(CropIntent, 222);
-        }catch (ActivityNotFoundException e) {
-        }
-    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //        path=null;
         try {
-            if (requestCode == ReqCode && resultCode == Activity.RESULT_OK && data != null) {
-                path = data.getData();
-//                bitmapImage = ;
-                ImageCropFunction(path);
-//                try {
-//                    bitmapImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), path);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-            }
-            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-                Bundle extras = data.getExtras();
-                bitmapImage = (Bitmap) extras.get("data");
+            if (resultCode == Activity.RESULT_OK && requestCode == 2410) {
+                final Uri resultUri = data.getData();
                 try {
-                    path = saveImage(bitmapImage);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                ImageCropFunction(path);
-            }
-            if (requestCode == 222) {
-                if (data != null) {
-                    Bundle bundle = data.getExtras();
-                    bitmapImage = bundle.getParcelable("data");
+                    bitmapImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
                     im = new ImageModel();
                     im.setPic(bitmapImage);
                     img = Bitmap.createScaledBitmap(bitmapImage, 256, 256, true);
                     im = modelEvaluate(im, img);
                     images.add(im);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("What is the fabric of the cloth?");
+                    builder.setIcon(R.drawable.logo);
+                    builder.setCancelable(false);
+                    options = new String[]{"Cotton", "Wool", "Nylon/Polyester", "Silk"};
+                    final int[] checkedItem = {-1};
+                    builder.setSingleChoiceItems(options, checkedItem[0], new DialogInterface.OnClickListener() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            checkedItem[0] = which;
 
-                    try{
-                        path=saveImage(bitmapImage);
-//                        ContentResolver resolver=getContext().getContentResolver();
-//                        OutputStream op=resolver.openOutputStream(path);
-//                        bitmapImage.compress(Bitmap.CompressFormat.JPEG,100,op);
-//                        Objects.requireNonNull(op);
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("What is the fabric of the cloth?");
-                builder.setIcon(R.drawable.logo);
-                builder.setCancelable(false);
-                options = new String[]{"Cotton", "Wool", "Nylon/Polyester", "Silk"};
-                final int[] checkedItem = {-1};
-                builder.setSingleChoiceItems(options, checkedItem[0], new DialogInterface.OnClickListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        checkedItem[0] = which;
-
-                        fabric = options[which];
-                        ColorDetector cd = new ColorDetector();
-                        String color = cd.getColor(img);
-                        if(color== null){
-                            Toast.makeText(getContext(),"Cant Detect Color, Plz Add Manually",Toast.LENGTH_LONG).show();
+                            fabric = options[which];
+                            ColorDetector cd = new ColorDetector();
+                            String color = cd.getColor(img);
+                            if(color== null){
+                                Toast.makeText(getContext(),"Cant Detect Color, Plz Add Manually",Toast.LENGTH_LONG).show();
+                            }
+                            Toast.makeText(getContext(),""+color,Toast.LENGTH_LONG).show();
+                            Boolean success = clothdb.insertData(user.getUsername(), resultUri, im.getName(), color, fabric);
+                            if (success) {
+                                Toast.makeText(getContext(), "Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "Failed To Insert", Toast.LENGTH_SHORT).show();
+                            }
+                            dialog.dismiss();
                         }
-                        Toast.makeText(getContext(),""+color,Toast.LENGTH_LONG).show();
-                        Boolean success = clothdb.insertData(user.getUsername(), path, im.getName(), color, fabric);
-                        if (success) {
-                            Toast.makeText(getContext(), "Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Failed To Insert", Toast.LENGTH_SHORT).show();
-                        }
-                        dialog.dismiss();
-                    }
-                });
-                AlertDialog dialog1 = builder.create();
-                dialog1.show();
+                    });
+                    AlertDialog dialog1 = builder.create();
+                    dialog1.show();
 //
-                ImageAdapterAdd adapter = new ImageAdapterAdd(images, getContext());
-                displayImages.setAdapter(adapter);
-                StaggeredGridLayoutManager staggered = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-                displayImages.setLayoutManager(staggered);
+                    ImageAdapterAdd adapter = new ImageAdapterAdd(images, getContext());
+                    displayImages.setAdapter(adapter);
+                    StaggeredGridLayoutManager staggered = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+                    displayImages.setLayoutManager(staggered);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }catch (NullPointerException e){
             Toast.makeText(getContext(),"Image Not Captured",Toast.LENGTH_SHORT).show();
+            Log.d("Error",e.toString());
         }
     }
     public ImageModel modelEvaluate(ImageModel im, Bitmap img) {
@@ -331,59 +246,4 @@ public class GalleryFragment extends Fragment {
         }
         return im;
     }
-    private Uri saveImage(Bitmap bitmap) throws IOException {
-        Uri ImageCollection = null;
-        ContentResolver resolver=getContext().getContentResolver();
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
-            ImageCollection=MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
-        }else{
-            ImageCollection=MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        }
-        ContentValues cv=new ContentValues();
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String mImageName="ClothMe"+ timeStamp +".jpg";
-        cv.put(MediaStore.Images.Media.DISPLAY_NAME,mImageName);
-        cv.put(MediaStore.Images.Media.MIME_TYPE,"image/jpeg");
-        Uri imageUri=resolver.insert(ImageCollection,cv);
-        try{
-            OutputStream op=resolver.openOutputStream(Objects.requireNonNull(imageUri));
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,op);
-            Objects.requireNonNull(op);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return imageUri;
-    }
-
-    public Boolean reqPerm() {
-        ActivityCompat.requestPermissions(
-                getActivity(),
-                new String[]{
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                },
-                1
-        );
-        return checkPermission();
-    }
-    public Boolean checkPermission() {
-        Boolean perm1, perm2;
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getContext(), "READ GRANTED", Toast.LENGTH_SHORT).show();
-            perm1 = true;
-        } else {
-            Toast.makeText(getContext(), "READ DENIED", Toast.LENGTH_SHORT).show();
-            perm1 = false;
-        }
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getContext(), "WRITE GRANTED", Toast.LENGTH_SHORT).show();
-            perm2 = true;
-        } else {
-            Toast.makeText(getContext(), "WRITE DENIED", Toast.LENGTH_SHORT).show();
-            perm2 = false;
-        }
-        return perm1 && perm2;
-    }
-
-
 }
