@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -26,6 +27,8 @@ import android.widget.Toast;
 
 import com.example.clothme.Database.AccountDB;
 import com.example.clothme.Models.UserModel;
+import com.example.clothme.ui.AddWardrobe.GalleryFragment;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.io.IOException;
 
@@ -129,12 +132,17 @@ public class App_Input1 extends AppCompatActivity {
             public void onClick(View v) {
                 reqPerm();
                 if(reqPerm()){
-                    Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                    startActivityForResult(gallery, ReqCode);
+                    ImagePicker.with(App_Input1.this)
+                            .crop()
+                            .cropSquare()//Crop image(Optional), Check Customization for more option
+                            .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                            .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                            .start(2410);
                 }else{
                     Toast.makeText(App_Input1.this,"Plz grant all permissions in-order to use this app",Toast.LENGTH_LONG).show();
 
                 }
+
             }
         });
     }
@@ -146,11 +154,11 @@ public class App_Input1 extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==ReqCode && resultCode==RESULT_OK && data!=null){
-            Uri path=data.getData();
-            profilePath=path;
+        if (resultCode == Activity.RESULT_OK && requestCode == 2410) {
+            final Uri resultUri = data.getData();
+            profilePath=resultUri;
             try {
-                image= MediaStore.Images.Media.getBitmap(getContentResolver(),path);
+                image= MediaStore.Images.Media.getBitmap(getContentResolver(),resultUri);
                 profilePic.setImageBitmap(image);
             } catch (IOException e) {
                 e.printStackTrace();

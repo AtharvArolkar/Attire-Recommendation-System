@@ -1,5 +1,6 @@
 package com.example.clothme.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ public class SpinnerAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("ViewHolder")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater lf=LayoutInflater.from(context);
@@ -55,6 +57,9 @@ public class SpinnerAdapter extends BaseAdapter {
             tv.setBackgroundColor(Color.rgb(r,g,b)) ;
         }else{
             tv.setTextColor(Color.rgb(255,255,255));
+        }
+        if(colorText.contains("White")){
+            tv.setTextColor(Color.rgb(0,0,0));
         }
 //        tv.setBackgroundColor((int)Integer.parseInt(ResId)) ;
 //
