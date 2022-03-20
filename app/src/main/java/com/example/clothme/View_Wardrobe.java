@@ -28,9 +28,13 @@ public class View_Wardrobe extends AppCompatActivity {
     Button cancel,update;
     ImageView im;
     ClothesModel cm;
-    String[] TypeCat = new String[]{"Blazers","Cardigans","Jumpsuits","Tracksuits","T-Shirts","Tops","Shirts","Long Sleeves Shirt",
-            "Innerwear Vests","Tank Tops","Hoodies","Suits","Shirt","Dresses","Gowns","Coats","Sherwanis","Jackets","Sweaters",
-            "Sweatshirts","Vests","Pajama","Capri & Cropped Pants","Track Pants","Jeans","Tights","Shorts","Skirts","Lounge Pants","Trousers","Pants","Leggings"};
+//    String[] TypeCat = new String[]{"Blazers","Cardigans","Jumpsuits","Tracksuits","T-Shirts","Tops","Shirts","Long Sleeves Shirt",
+//            "Innerwear Vests","Tank Tops","Hoodies","Suits","Shirt","Dresses","Gowns","Coats","Sherwanis","Jackets","Sweaters",
+//            "Sweatshirts","Vests","Pajama","Capri & Cropped Pants","Track Pants","Jeans","Tights","Shorts","Skirts","Lounge Pants","Trousers","Pants","Leggings"};
+    String[]TypeCatMale=new String[]{"Pajama","Shirt","Shorts","Track Pants","Sweaters","T-Shirts","Lounge Pants","Innerwear Vests","Jackets",
+            "Sherwanis","Trousers","Tracksuits","Long Sleeves Shirt","Blazers","Jeans"};
+    String[] TypeCatFemale=new String[]{"Skirts","Sweaters","Tank Tops","Jackets","Tights","Dresses","Blazers","Shorts","Capri & Cropped Pants",
+            "Gowns","Cardigans","Tops","Jeans","Hoodies","Shirts","Suits","Pants","Vests","Coats","Jumpsuits","Sweatshirts","T-Shirts","Leggings"};
     String[] FabricCat = new String[]{"Cotton", "Wool", "Nylon/Polyester", "Silk",};
     String[] ColorCat = new String[]{"NULL","MediumOrchid","PaleGoldenRod","Black","DarkSeaGreen","LightSlateGray","Sienna","Gainsboro","LightCoral","Orange","DarkSlateGray",
             "DodgerBlue","Aquamarine","LightSeaGreen","Beige","RoyalBlue","DarkViolet","MediumSlateBlue","OliveDrab","MidnightBlue","SandyBrown","Violet",
@@ -64,7 +68,13 @@ public class View_Wardrobe extends AppCompatActivity {
         im.setImageURI(uri);
 
 //        Toast.makeText(this,""+cm.getColor(),Toast.LENGTH_SHORT).show();
-
+        String[] TypeCat;
+        String gender=MainActivity.user.getGender();
+        if(gender.equals("Male")){
+            TypeCat=TypeCatMale;
+        }else{
+            TypeCat=TypeCatFemale;
+        }
         ArrayAdapter<String> typeAdapter=new ArrayAdapter<>(View_Wardrobe.this, android.R.layout.simple_spinner_dropdown_item,TypeCat);
         type.setAdapter(typeAdapter);
         int pos=Arrays.asList(TypeCat).indexOf(cm.getClothtype());
