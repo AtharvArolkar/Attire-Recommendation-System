@@ -141,6 +141,5 @@
     <orderEntry type="library" name="Gradle: org.tensorflow:tensorflow-lite:2.4.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.dhaval2404:imagepicker:2.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.volley:volley:1.2.1@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.google.maps.android:android-maps-utils:2.3.0@aar" level="project" />
   </component>
 </module>
