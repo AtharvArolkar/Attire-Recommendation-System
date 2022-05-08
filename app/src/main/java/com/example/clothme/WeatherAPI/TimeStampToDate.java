@@ -10,7 +10,7 @@ public class TimeStampToDate {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis((long)t*1000);
         Date d = c.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 //        Timestamp ts=new Timestamp(System.currentTimeMillis());
 //        Date d=new Date(ts.getTime());
         String date=sdf.format(d).toString();
