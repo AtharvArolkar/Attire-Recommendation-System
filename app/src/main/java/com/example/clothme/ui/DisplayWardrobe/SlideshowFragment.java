@@ -40,7 +40,7 @@ public class SlideshowFragment extends Fragment {
         viewPager2=root.findViewById(R.id.viewPager_display_outfits);
 //        FragmentManager fm=getParentFragmentManager();
 //        FragmentAdapter fa=new FragmentAdapter(fm);
-        viewPager2.setAdapter(new FragmentAdapter(getChildFragmentManager()));
+        viewPager2.setAdapter(new FragmentAdapter(getChildFragmentManager() ));
         tabLayout.setupWithViewPager(viewPager2);
 //        tableLayout.s
 //         tableLayout=root.findViewById();
