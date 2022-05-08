@@ -45,7 +45,7 @@ public class SpinnerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater lf=LayoutInflater.from(context);
-        convertView=lf.inflate(android.R.layout.simple_dropdown_item_1line,null);
+        convertView=lf.inflate(android.R.layout.simple_spinner_dropdown_item,null);
         TextView tv=(TextView)convertView.findViewById(android.R.id.text1);
         Color c=new Color();
         String colorText=colors[position];

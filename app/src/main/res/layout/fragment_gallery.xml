@@ -8,44 +8,63 @@
     android:background="@color/app_back"
     tools:context=".ui.AddWardrobe.GalleryFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/displayImages"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:background="#F8F5F5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/displayImages">
+            android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/id_addPic"
-            android:layout_width="140dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="40dp"
-            android:backgroundTint="#FFFFFF"
-            android:text="Add"
-            android:textColor="#070707" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/displayImages"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                android:background="#F8F5F5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/id_doneUpload"
-            android:layout_width="140dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="40dp"
-            android:backgroundTint="@color/green"
-            android:gravity="center"
-            android:text="Done"
-            android:textColor="#FDFDFD" />
-    </LinearLayout>
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="15dp"
+                android:orientation="horizontal">
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.0"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/displayImages"-->
+<!--                app:layout_constraintVertical_bias="1.0"-->
+
+                <Button
+                    android:id="@+id/id_addPic"
+                    android:layout_width="140dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="40dp"
+                    android:backgroundTint="#FFFFFF"
+                    android:layout_marginLeft="15dp"
+                    android:text="Add"
+                    android:textColor="#070707" />
+
+                <Button
+                    android:id="@+id/id_doneUpload"
+                    android:layout_width="140dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="15dp"
+                    android:backgroundTint="@color/green"
+                    android:gravity="center"
+                    android:text="Done"
+                    android:textColor="#FDFDFD" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
