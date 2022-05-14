@@ -5,7 +5,9 @@ import android.net.Uri;
 
 public class ImageModel {
     Bitmap image;
+    String id;
     String text;
+
     public Bitmap getBitmap() {
         return image;
     }
@@ -17,4 +19,12 @@ public class ImageModel {
     }
 
     public void setText(String text) {this.text = text;}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

@@ -37,12 +37,12 @@
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif-smallcaps"
                     android:text="What is the event?"
                     android:textAlignment="center"
                     android:textColor="#040404"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
 
                 <Spinner
                     android:id="@+id/spinnerEvent"
@@ -64,12 +64,12 @@
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif-smallcaps"
                     android:text="Where is the event?"
                     android:textAlignment="center"
                     android:textColor="#040404"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
 
                 <LinearLayout
                     android:layout_width="300dp"
@@ -87,6 +87,7 @@
                         android:layout_weight="2"
                         android:background="@drawable/shape"
                         android:ems="10"
+                        android:gravity="center"
                         android:hint="Select Location"
                         android:inputType="textPersonName"
                         android:textAlignment="center"
@@ -99,6 +100,7 @@
                         android:layout_height="50dp"
                         android:layout_weight="0.5"
                         android:drawableEnd="@drawable/location"
+                        android:gravity="center"
                         android:text="  "
                         android:textAlignment="center"
                         app:cornerRadius="20dp" />
@@ -118,12 +120,12 @@
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif-smallcaps"
                     android:text="When is the event?"
                     android:textAlignment="center"
                     android:textColor="#040404"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
 
                 <TextView
                     android:id="@+id/editTextDate"
@@ -131,9 +133,10 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:background="@drawable/shape"
+                    android:gravity="center"
                     android:hint="Select Date"
-                    android:textAlignment="center"
                     android:inputType="date"
+                    android:textAlignment="center"
                     android:textColor="#000000"
                     android:textColorHint="#7C7B7B" />
             </LinearLayout>
@@ -150,12 +153,12 @@
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:fontFamily="casual"
+                    android:fontFamily="sans-serif-smallcaps"
                     android:text="What time is the event?"
                     android:textAlignment="center"
                     android:textColor="#040404"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="normal" />
 
                 <Button
                     android:id="@+id/timePick"

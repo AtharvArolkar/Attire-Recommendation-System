@@ -27,11 +27,13 @@ public class ClothesDB extends SQLiteOpenHelper {
     public static final String dbname = "database.db";
     public static final String TABLE_NAME = "clothesimage";
     public static final String TABLE_NAME_PARENT = "Accounts";
-    String[] TopWear = new String[]{"Blazers","Cardigans","Jumpsuits","Tracksuits","T-Shirts","Tops","Shirts","Long Sleeves Shirt",
-            "Innerwear Vests","Tank Tops","Hoodies","Suits","Shirt","Dresses","Gowns","Coats","Sherwanis","Jackets","Sweaters","Sweatshirts","Vests"};
+    private static final int startID = 12345;
+    String[] TopWear = new String[]{"Cardigans", "Jumpsuits", "T-Shirt", "Tops", "Shirt", "Long Sleeves Shirt",
+            "Innerwear Vests", "Tank Tops", "Hoodies", "Suits", "Shirt", "Dresses", "Gowns", "Coats", "Sherwanis", "Sweatshirts", "Vests"};
+    String[] OuterWear=new String[]{"Coat","Blazer","Jacket","Tracksuits","Sweaters"};
 
 
-    String[] BottomWear = new String[]{"Pajama","Capri & Cropped Pants","Track Pants","Jeans","Tights","Shorts","Skirts","Lounge Pants","Trousers","Pants","Leggings"};
+    String[] BottomWear = new String[]{"Pajama", "Capri & Cropped Pants", "Track Pants", "Jeans", "Tights", "Shorts", "Skirts", "Lounge Pants", "Trousers", "Pants", "Leggings"};
 
     public ClothesDB(@Nullable Context context) {
         super(context, dbname, null, 1);
@@ -53,84 +55,160 @@ public class ClothesDB extends SQLiteOpenHelper {
 
     public boolean insertData(String username, Uri path, String Clothtype, String color, String fabric) {
 //        String s = ur.toString();
-        SQLiteDatabase Mydb = this.getWritableDatabase();
+        SQLiteDatabase Mydb = ClothesDB.this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 //        cv.put("address", s);
         cv.put("username", username);
+        cv.put("imageID", String.valueOf(getID()));
         cv.put("imageURI", path.toString());
         cv.put("ClothType", Clothtype);
         cv.put("color", color);
         cv.put("fabric", fabric);
+
         if (Arrays.asList(TopWear).contains(Clothtype)) {
             cv.put("category", "topwear");
-        } else {
+        } else if(Arrays.asList(BottomWear).contains(Clothtype)){
             cv.put("category", "bottomwear");
+        }else{
+            cv.put("category", "outerwear");
         }
         long ins = Mydb.insert(TABLE_NAME, null, cv);
+        Mydb.close();
         if (ins == -1) {
             return false;
         } else {
             return true;
         }
-    }
 
+    }
+//    public Bitmap getPic(String uri){
+//        Bitmap image=MediaStore.Images.Media.getBitmap(context.getContentResolver(), imageUri);
+//    }
     public ArrayList<ImageModel> getImage(String username, String category, Context context) {
         ArrayList<ImageModel> images = new ArrayList<>();
         SQLiteDatabase MyDB = ClothesDB.this.getReadableDatabase();
         final Cursor cursor = MyDB.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-        try {
 
+        try {
+            ImageModel im = null;
             while (cursor.moveToNext()) {
                 if (cursor.getString(0).equals(username)) {
-                    ImageModel im = new ImageModel();
-                    im.setText(cursor.getString(2));
+                    im = new ImageModel();
+                    im.setText(cursor.getString(3));
 //                    byte[] img = cursor.getBlob(1);
-                    Uri imageUri = Uri.parse(cursor.getString(1));
+                    Uri imageUri = Uri.parse(cursor.getString(2));
+//                    Log.v("AAA",imageUri.toString());
 //                    File f=new File(imageUri.getPath());
 //                    if(f.exists()){
-//
+
 //                    }
                     Bitmap image = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imageUri);
                     im.setPic(image);
-                    if (cursor.getString(5).equals(category)) {
+                    im.setId(cursor.getString(1));
+                    if (category != null) {
+                        if (cursor.getString(6).equals(category)) {
+                            images.add(im);
+                        }
+                    }else{
                         images.add(im);
                     }
                 }
             }
+//            Log.v("AAA",im.getName());
         } catch (Exception e) {
             Log.e("error", e.toString());
         }
         cursor.close();
         MyDB.close();
+        Log.v("AAA", Integer.toString(images.size()));
         return images;
     }
-    public ClothesModel getCloth(String username, String Clothtype, int position) {
-        SQLiteDatabase db = this.getReadableDatabase();//
+    public ArrayList<ClothesModel> getImageList(String username, Context context) {
+        ArrayList<ClothesModel> images = new ArrayList<>();
+        SQLiteDatabase MyDB = ClothesDB.this.getReadableDatabase();
+        final Cursor cursor = MyDB.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+
+        try {
+            ClothesModel im = null;
+            while (cursor.moveToNext()) {
+                if (cursor.getString(0).equals(username)) {
+//                    im = new ClothesModel();
+                    String id = cursor.getString(1);
+                    String uri = cursor.getString(2);
+                    String clothtype = cursor.getString(3);
+                    String color = cursor.getString(4);
+                    String fabric = cursor.getString(5);
+                    String cat = cursor.getString(6);
+//                    if(cat==category){
+                        im= new ClothesModel(username, id, uri, clothtype, color, fabric, cat);
+                        images.add(im);
+//                    }
+                }
+            }
+//            Log.v("AAA",im.getName());
+        } catch (Exception e) {
+            Log.e("error", e.toString());
+        }
+        cursor.close();
+        MyDB.close();
+        Log.v("AAA", Integer.toString(images.size()));
+        return images;
+    }
+    public int getID() {
+        int id = startID;
+        String sql = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = ClothesDB.this.getReadableDatabase();
+        final Cursor cursor = db.rawQuery(sql, null);
+        while (cursor.moveToNext()) {
+            id++;
+        }
+        cursor.close();
+        return id;
+    }
+
+    public ClothesModel getCloth(String username, String Clothtype, String reqID) {
+        SQLiteDatabase db = ClothesDB.this.getReadableDatabase();//
         String cat = null;
         if (Arrays.asList(TopWear).contains(Clothtype)) {
             cat = "topwear";
-        } else {
+        } else if(Arrays.asList(BottomWear).contains(Clothtype)){
             cat = "bottomwear";
+        }else{
+            cat = "outerwear";
         }
-        final Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE username=? AND category=?", new String[]{username, cat});//
+//        if (Arrays.asList(TopWear).contains(Clothtype)) {
+//            cat = "topwear";
+//        } else {
+//            cat = "bottomwear";
+//        }
+        final Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE imageID=?", new String[]{reqID});//
         int pos = 0;
+        String id = null;
         String uri = null;
         String clothtype = null;
         String color = null;
         String fabric = null;
         String category = null;
+        ClothesModel cm = null;
         while (cursor.moveToNext()) {
-            if (pos <= position) {
-                uri = cursor.getString(1);
-                clothtype = cursor.getString(2);
-                color = cursor.getString(3);
-                fabric = cursor.getString(4);
-                category = cursor.getString(5);
-            }
-            pos++;
+            Log.v("AAA1", String.valueOf(cursor.getCount()));
+            id = cursor.getString(1);
+            uri = cursor.getString(2);
+            clothtype = cursor.getString(3);
+            color = cursor.getString(4);
+            fabric = cursor.getString(5);
+            category = cursor.getString(6);
+            cm = new ClothesModel(username, id, uri, clothtype, color, fabric, category);
         }
+//        while (cursor.moveToNext()) {
+//            if (pos <= position) {
+//
+//            }
+//            pos++;
+//        }
 
-        ClothesModel cm = new ClothesModel(username, uri, clothtype, color, fabric, category);
+
+//        Log.
         cursor.close();
         db.close();
         return cm;
@@ -139,18 +217,24 @@ public class ClothesDB extends SQLiteOpenHelper {
     public void updateCloth(ClothesModel cm) {
         SQLiteDatabase db = this.getReadableDatabase();//
         String cat = null;
-        ContentValues cn=new ContentValues();
-        cn.put("ClothType",cm.getClothtype());
-        cn.put("color",cm.getColor());
-        cn.put("fabric",cm.getFabric());
-        String cat1 = null;
+        ContentValues cn = new ContentValues();
+        cn.put("ClothType", cm.getClothtype());
+        cn.put("color", cm.getColor());
+        cn.put("fabric", cm.getFabric());
         if (Arrays.asList(TopWear).contains(cm.getClothtype())) {
             cat = "topwear";
-        } else {
+        } else if(Arrays.asList(BottomWear).contains(cm.getClothtype())){
             cat = "bottomwear";
+        }else{
+            cat = "outerwear";
         }
-        cn.put("category",cat);
-        long r=db.update(TABLE_NAME,cn,"username =? AND imageUri=?",new String[]{cm.getUsername(), cm.getUri()});
+//        if (Arrays.asList(TopWear).contains(cm.getClothtype())) {
+//            cat = "topwear";
+//        } else {
+//            cat = "bottomwear";
+//        }
+        cn.put("category", cat);
+        long r = db.update(TABLE_NAME, cn, "username =? AND imageUri=?", new String[]{cm.getUsername(), cm.getUri()});
     }
 }
 
