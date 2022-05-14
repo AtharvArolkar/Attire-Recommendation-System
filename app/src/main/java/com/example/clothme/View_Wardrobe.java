@@ -31,10 +31,10 @@ public class View_Wardrobe extends AppCompatActivity {
 //    String[] TypeCat = new String[]{"Blazers","Cardigans","Jumpsuits","Tracksuits","T-Shirts","Tops","Shirts","Long Sleeves Shirt",
 //            "Innerwear Vests","Tank Tops","Hoodies","Suits","Shirt","Dresses","Gowns","Coats","Sherwanis","Jackets","Sweaters",
 //            "Sweatshirts","Vests","Pajama","Capri & Cropped Pants","Track Pants","Jeans","Tights","Shorts","Skirts","Lounge Pants","Trousers","Pants","Leggings"};
-    String[]TypeCatMale=new String[]{"Pajama","Shirt","Shorts","Track Pants","Sweaters","T-Shirts","Lounge Pants","Innerwear Vests","Jackets",
-            "Sherwanis","Trousers","Tracksuits","Long Sleeves Shirt","Blazers","Jeans"};
-    String[] TypeCatFemale=new String[]{"Skirts","Sweaters","Tank Tops","Jackets","Tights","Dresses","Blazers","Shorts","Capri & Cropped Pants",
-            "Gowns","Cardigans","Tops","Jeans","Hoodies","Shirts","Suits","Pants","Vests","Coats","Jumpsuits","Sweatshirts","T-Shirts","Leggings"};
+    String[]TypeCatMale=new String[]{"Pajama","Shirt","Shorts","Track Pants","Sweaters","T-Shirt","Lounge Pants","Innerwear Vests","Jacket",
+            "Sherwanis","Trousers","Tracksuits","Long Sleeves Shirt","Blazer","Jeans","Coat"};
+    String[] TypeCatFemale=new String[]{"Skirts","Sweaters","Tank Tops","Jacket","Tights","Dresses","Blazer","Shorts","Capri & Cropped Pants",
+            "Gowns","Cardigans","Tops","Jeans","Hoodies","Shirt","Suits","Pants","Vests","Coats","Jumpsuits","Sweatshirts","T-Shirt","Leggings","Coat"};
     String[] FabricCat = new String[]{"Cotton", "Wool", "Nylon/Polyester", "Silk",};
     String[] ColorCat = new String[]{"NULL","MediumOrchid","PaleGoldenRod","Black","DarkSeaGreen","LightSlateGray","Sienna","Gainsboro","LightCoral","Orange","DarkSlateGray",
             "DodgerBlue","Aquamarine","LightSeaGreen","Beige","RoyalBlue","DarkViolet","MediumSlateBlue","OliveDrab","MidnightBlue","SandyBrown","Violet",
@@ -61,7 +61,7 @@ public class View_Wardrobe extends AppCompatActivity {
         im=findViewById(R.id.imageViewCloth);
         Intent i=getIntent();
         ClothesDB db=new ClothesDB(this);
-        cm=db.getCloth(MainActivity.user.getUsername(),i.getExtras().getString("cloth"),i.getExtras().getInt("position"));
+        cm=db.getCloth(MainActivity.user.getUsername(),i.getExtras().getString("cloth"),i.getExtras().getString("clothId"));
         final String path = getPathFromURI(Uri.parse(cm.getUri()));
         File f = new File(path);
         Uri uri = Uri.fromFile(f);
@@ -132,7 +132,7 @@ public class View_Wardrobe extends AppCompatActivity {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClothesModel cm1=new ClothesModel(cm.getUsername(),cm.getUri(),newType,newColor,newFabric,null);
+                ClothesModel cm1=new ClothesModel(cm.getUsername(),cm.getId(),cm.getUri(),newType,newColor,newFabric,null);
                 db.updateCloth(cm1);
                 setResult(RESULT_OK, null);
                 finish();

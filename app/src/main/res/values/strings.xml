@@ -18,13 +18,27 @@
 
     <string-array name="Events">
         <item>Select Event</item>
-        <item>Casual/Travel</item>
+        <item>religious event</item>
+        <item>casual/travel</item>
+        <item>picnic</item>
+        <item>barbeque</item>
         <item>Smart Casual</item>
-        <item>Beach Party</item>
-        <item>Cocktail Party</item>
-        <item>Ethnics</item>
         <item>Wedding</item>
-        <item>Interview</item>
-        <item>Sports</item>
+        <item>cocktail party</item>
+        <item>job interview</item>
+        <item>business dinner</item>
+        <item>dinner party</item>
+        <item>beach party</item>
+        <item>sports</item>
+        <!--        -->
+        <!--        <item>Select Event</item>-->
+        <!--        <item>Casual/Travel</item>-->
+        <!--        <item>Smart Casual</item>-->
+        <!--        <item>Beach Party</item>-->
+        <!--        <item>Cocktail Party</item>-->
+        <!--        <item>Ethnics</item>-->
+        <!--        <item>Wedding</item>-->
+        <!--        <item>Interview</item>-->
+        <!--        <item>Sports</item>-->
     </string-array>
 </resources>

@@ -22,6 +22,8 @@ public class CurrentWeatherPojo {
 
     // Getter Methods
 
+
+
     public CurrentWeatherPojo(float dt, float sunrise, float sunset, float temp, float feels_like, float pressure, float humidity, float dew_point, float uvi, float clouds, float visibility, float wind_speed, float wind_deg, float wind_gust, ArrayList<DailyPojo.weather> weather) {
         this.dt = dt;
         this.sunrise = sunrise;
@@ -153,4 +155,6 @@ public class CurrentWeatherPojo {
     public void setWind_gust(float wind_gust) {
         this.wind_gust = wind_gust;
     }
+
+    public ArrayList<DailyPojo.weather> getWeather() { return weather; }
 }

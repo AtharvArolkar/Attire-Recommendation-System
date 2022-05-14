@@ -35,6 +35,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.example.clothme.Adapter.ImageAdapter;
 import com.example.clothme.Adapter.ImageAdapterAdd;
 import com.example.clothme.ClothMeNav;
 import com.example.clothme.Color.ColorDetector;
@@ -89,15 +90,15 @@ public class GalleryFragment extends Fragment {
 //    String[] menlabels = new String[]{"Blazers","Innerwear Vests","Jackets","Jeans","Long Sleeves Shirt","Lounge Pants","Shirts",
 //            "Shorts","Sweaters","Track Pants","Trousers","T-Shirts"};
 
-    String[] menlabels = new String[]{"Blazers", "Innerwear Vests", "Jackets", "Jeans", "Shirt", "Long Sleeves Shirt", "Lounge Pants", "Pajama",
-            "Sherwanis", "Shirt", "Shorts", "Sweaters", "Track Pants", "Tracksuits", "Trousers", "T-Shirts"};
+    String[] menlabels = new String[]{"Blazer", "Innerwear Vests", "Jacket", "Jeans", "Shirt", "Long Sleeves Shirt", "Lounge Pants", "Pajama",
+            "Sherwanis", "Shirt", "Shorts", "Sweaters", "Track Pants", "Tracksuits", "Trousers", "T-Shirt"};
 
 
 
 
-    String[] womenlabels=new String[]{"Jackets","Pants","Shorts","Skirts","Tank Tops","Tops", "Blazers","Capri & Cropped Pants","Cardigans","Coats",
-            "Dresses","Dresses","Dresses","Gowns","Hoodies","Jackets","Jeans","Jumpsuits", "Skirts","Leggings","Skirts","Skirts","Pants","Shirts","Shorts",
-            "Skirts","Suits","Sweaters","Sweatshirts","T-Shirts","Tank Tops","Tights","Tops","Vests"};
+    String[] womenlabels=new String[]{"Jacket","Pants","Shorts","Skirts","Tank Tops","Tops", "Blazer","Capri & Cropped Pants","Cardigans","Coats",
+            "Dresses","Dresses","Dresses","Gowns","Hoodies","Jackets","Jeans","Jumpsuits", "Skirts","Leggings","Skirts","Skirts","Pants","Shirt","Shorts",
+            "Skirts","Suits","Sweaters","Sweatshirts","T-Shirt","Tank Tops","Tights","Tops","Vests"};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

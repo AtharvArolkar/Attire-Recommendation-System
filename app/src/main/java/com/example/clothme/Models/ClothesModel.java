@@ -2,15 +2,21 @@ package com.example.clothme.Models;
 
 public class ClothesModel {
     String username;
+    String id;
     String uri;
     String clothtype;
     String color;
+
+
+
     String fabric;
     String category;
 
     public String getUsername() {
         return username;
     }
+
+    public String getId() { return id;  }
 
     public String getUri() {
         return uri;
@@ -32,8 +38,9 @@ public class ClothesModel {
         return category;
     }
 
-    public ClothesModel(String username, String uri, String clothtype, String color, String fabric, String category) {
+    public ClothesModel(String username,String id, String uri, String clothtype, String color, String fabric, String category) {
         this.username = username;
+        this.id=id;
         this.uri = uri;
         this.clothtype = clothtype;
         this.color = color;

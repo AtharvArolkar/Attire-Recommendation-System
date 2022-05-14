@@ -30,7 +30,7 @@ public class AccountDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql="create table "+TABLE_NAME+"(username text primary key, fname text,lname text, gender text,age text,password text," +
                 "profilepic text, loggedIn integer)";
-        String sql1="create table " +TABLE_NAME1+ " (username text,imageUri text, ClothType text, color text, fabric text,category text," +
+        String sql1="create table " +TABLE_NAME1+ " (username text,imageID text,imageUri text, ClothType text, color text, fabric text,category text," +
                 "FOREIGN KEY(username) REFERENCES Accounts(username))";
         db.execSQL(sql);
         db.execSQL(sql1);

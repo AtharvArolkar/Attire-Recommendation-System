@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,35 +19,30 @@ import com.example.clothme.R;
 import java.util.ArrayList;
 
 
-public class TopWearFragment extends Fragment {
+public class OuterWearFragment extends Fragment {
     RecyclerView displayImages;
-    public TopWearFragment() {
+    public OuterWearFragment() {
         // Required empty public constructor
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view =inflater.inflate(R.layout.fragment_outer_wear, container, false);
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_top_wear, container, false);
-
-        displayImages=view.findViewById(R.id.recylcer_top_wear);
+        displayImages=view.findViewById(R.id.recylcer_outer_wear);
         ClothesDB db=new ClothesDB(getContext());
-        ArrayList<ImageModel> top_wear_images=db.getImage(MainActivity.user.getUsername(),"topwear",getContext());
-//        Log.v("AAA",top_wear_images.get(0).getName());
-        ImageAdapter adapter=new ImageAdapter(top_wear_images, getContext());
+        ArrayList<ImageModel> outer_wear_images=db.getImage(MainActivity.user.getUsername(),"outerwear",getContext());
+        ImageAdapter adapter=new ImageAdapter(outer_wear_images, getContext());
         displayImages.setAdapter(adapter);
         StaggeredGridLayoutManager staggered=new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
-        displayImages.setLayoutManager(staggered);
-
         return view;
     }
-
     @Override
     public void onResume() {
         super.onResume();
         ClothesDB db=new ClothesDB(getContext());
-        ArrayList<ImageModel> top_wear_images=db.getImage(MainActivity.user.getUsername(),"topwear",getContext());
-        ImageAdapter adapter=new ImageAdapter(top_wear_images, getContext());
+        ArrayList<ImageModel> outerwear_wear_images=db.getImage(MainActivity.user.getUsername(),"outerwear",getContext());
+        ImageAdapter adapter=new ImageAdapter(outerwear_wear_images, getContext());
         displayImages.setAdapter(adapter);
         StaggeredGridLayoutManager staggered=new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         displayImages.setLayoutManager(staggered);

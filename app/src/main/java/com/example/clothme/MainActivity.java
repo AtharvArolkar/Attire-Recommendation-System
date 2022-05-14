@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent i = new Intent(MainActivity.this, ClothMeNav.class);
 //            Toast.makeText(this,"Hi",Toast.LENGTH_SHORT).show();
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
+                MainActivity.this.finish();
             } else {
                 username = findViewById(R.id.id_username);
                 password = findViewById(R.id.id_password);
@@ -76,7 +78,9 @@ public class MainActivity extends AppCompatActivity {
                                         password.setText("");
                                         accountDB.logIn(user_name);
                                         Intent i = new Intent(MainActivity.this, ClothMeNav.class);
+                                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(i);
+                                        MainActivity.this.finish();
                                     } else {
                                         Toast.makeText(MainActivity.this, "Password Invalid", Toast.LENGTH_SHORT).show();
                                     }

@@ -4,7 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_back"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp"
     tools:context=".Homepage">
+    <!--    tools:context=".ui.home.HomeFragment">-->
+    <!--    tools:context=".Homepage"-->
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

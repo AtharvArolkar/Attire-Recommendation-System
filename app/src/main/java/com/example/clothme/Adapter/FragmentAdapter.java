@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.clothme.Fragments.BottomWearFragment;
+import com.example.clothme.Fragments.OuterWearFragment;
 import com.example.clothme.Fragments.TopWearFragment;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
@@ -20,13 +21,14 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0: return new TopWearFragment();
             case 1: return new BottomWearFragment();
+            case 2: return  new OuterWearFragment();
             default: return  new TopWearFragment();
         }
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Nullable
@@ -36,8 +38,10 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         if(position==0){
             title="TOP WEAR";
         }
-        else{
+        else if(position==1){
             title="BOTTOM WEAR";
+        }else{
+            title="OUTER WEAR";
         }
         return title;
     }

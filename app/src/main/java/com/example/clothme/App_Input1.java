@@ -172,6 +172,7 @@ public class App_Input1 extends AppCompatActivity {
                 new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.CAMERA
                 },
                 1
