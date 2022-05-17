@@ -45,7 +45,7 @@
                         android:id="@+id/id_temperature"
                         android:layout_width="fill_parent"
                         android:layout_height="60dp"
-                        android:fontFamily="casual"
+                        android:fontFamily="@font/roboto_thin"
                         android:gravity="center"
                         android:text="-:-/-:-"
                         android:textColor="#040404"
@@ -56,9 +56,11 @@
                         android:id="@+id/id_envType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_thin"
                         android:gravity="center|center_vertical"
                         android:text="---------"
-                        android:textColor="#716F6F" />
+                        android:textColor="#716F6F"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -99,8 +101,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/roboto_thin"
                         android:text="Recently Added"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/bt_viewWardrobe"
@@ -108,9 +112,11 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
                         android:backgroundTint="#FDFAFA"
+                        android:fontFamily="@font/roboto_thin"
                         android:text="View More"
                         android:textColor="#121111"
                         android:textSize="10sp"
+                        android:textStyle="bold"
                         app:cornerRadius="10dp" />
 
                 </LinearLayout>

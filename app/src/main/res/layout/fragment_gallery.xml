@@ -46,11 +46,13 @@
                     android:id="@+id/id_addPic"
                     android:layout_width="140dp"
                     android:layout_height="60dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginRight="40dp"
                     android:backgroundTint="#FFFFFF"
-                    android:layout_marginLeft="15dp"
+                    android:fontFamily="@font/roboto_thin"
                     android:text="Add"
-                    android:textColor="#070707" />
+                    android:textColor="#070707"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/id_doneUpload"
@@ -59,9 +61,11 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="15dp"
                     android:backgroundTint="@color/green"
+                    android:fontFamily="@font/roboto_thin"
                     android:gravity="center"
                     android:text="Done"
-                    android:textColor="#FDFDFD" />
+                    android:textColor="#FDFDFD"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

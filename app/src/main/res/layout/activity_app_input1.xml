@@ -33,8 +33,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/green"
+                android:fontFamily="@font/roboto_thin"
                 android:text="Upload User Image"
                 android:textColor="#FBFAFA"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.051"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,8 +61,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="64dp"
                 android:backgroundTint="@color/green"
+                android:fontFamily="@font/roboto_thin"
                 android:text="next"
                 android:textColor="#F8F5F5"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.049"
@@ -93,7 +97,7 @@
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:fontFamily="sans-serif-smallcaps"
+                        android:fontFamily="@font/roboto_thin"
                         android:paddingTop="10dp"
                         android:text="First Name"
                         android:textAlignment="center"
@@ -108,11 +112,13 @@
                         android:layout_weight="1"
                         android:background="@drawable/shape"
                         android:ems="10"
+                        android:fontFamily="@font/roboto_thin"
                         android:inputType="textPersonName"
                         android:singleLine="false"
                         android:textColor="#000000"
                         android:textColorHint="#8F8F8F"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -130,7 +136,7 @@
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:fontFamily="sans-serif-smallcaps"
+                        android:fontFamily="@font/roboto_thin"
                         android:paddingTop="10dp"
                         android:text="Last Name"
                         android:textAlignment="center"
@@ -145,10 +151,12 @@
                         android:layout_weight="1"
                         android:background="@drawable/shape"
                         android:ems="10"
+                        android:fontFamily="@font/roboto_thin"
                         android:inputType="textPersonName"
                         android:textColor="#000000"
                         android:textColorHint="#8F8F8F"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -165,7 +173,7 @@
                         android:layout_width="250dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:fontFamily="sans-serif-smallcaps"
+                        android:fontFamily="@font/roboto_thin"
                         android:paddingTop="10dp"
                         android:text="Gender"
                         android:textAlignment="center"
@@ -187,15 +195,18 @@
                             android:layout_width="122dp"
                             android:layout_height="wrap_content"
                             android:background="#00FFFFFF"
+                            android:fontFamily="sans-serif"
                             android:onClick="checkButton"
                             android:text="Male"
-                            android:textColor="#000000" />
+                            android:textColor="#000000"
+                            android:textStyle="normal" />
 
                         <RadioButton
                             android:id="@+id/id_gender_female"
                             android:layout_width="122dp"
                             android:layout_height="wrap_content"
                             android:background="#00FFFFFF"
+                            android:fontFamily="sans-serif"
                             android:onClick="checkButton"
                             android:text="Female"
                             android:textColor="#040404" />
@@ -215,7 +226,7 @@
                         android:id="@+id/textView8"
                         android:layout_width="125dp"
                         android:layout_height="match_parent"
-                        android:fontFamily="sans-serif-smallcaps"
+                        android:fontFamily="@font/roboto_thin"
                         android:paddingTop="10dp"
                         android:text="Age"
                         android:textAlignment="center"
@@ -228,12 +239,14 @@
                         android:layout_width="245dp"
                         android:layout_height="50dp"
                         android:background="@drawable/shape"
+                        android:fontFamily="@font/roboto_thin"
                         android:inputType="number|textPassword"
                         android:paddingLeft="15dp"
                         android:paddingTop="6dp"
                         android:textColor="#000000"
                         android:textColorHint="#8F8F8F"
                         android:textSize="20sp"
+                        android:textStyle="bold"
                         tools:layout_editor_absoluteX="0dp"
                         tools:layout_editor_absoluteY="427dp" />
                 </LinearLayout>
@@ -251,7 +264,7 @@
                         android:id="@+id/textView9"
                         android:layout_width="125dp"
                         android:layout_height="match_parent"
-                        android:fontFamily="sans-serif-smallcaps"
+                        android:fontFamily="@font/roboto_thin"
                         android:paddingTop="10dp"
                         android:text="Username"
                         android:textAlignment="center"
@@ -264,12 +277,14 @@
                         android:layout_width="245dp"
                         android:layout_height="50dp"
                         android:background="@drawable/shape"
+                        android:fontFamily="@font/roboto_thin"
                         android:inputType="textPersonName"
                         android:paddingLeft="15dp"
                         android:paddingTop="6dp"
                         android:textColor="#000000"
                         android:textColorHint="#8F8F8F"
                         android:textSize="20sp"
+                        android:textStyle="bold"
                         tools:layout_editor_absoluteX="0dp"
                         tools:layout_editor_absoluteY="427dp" />
                 </LinearLayout>
@@ -287,7 +302,7 @@
                         android:id="@+id/textView10"
                         android:layout_width="125dp"
                         android:layout_height="match_parent"
-                        android:fontFamily="sans-serif-smallcaps"
+                        android:fontFamily="@font/roboto_thin"
                         android:paddingTop="10dp"
                         android:text="Password"
                         android:textAlignment="center"
@@ -301,12 +316,14 @@
                         android:layout_height="50dp"
                         android:background="@drawable/shape"
                         android:ems="10"
+                        android:fontFamily="@font/roboto_thin"
                         android:inputType="textPassword"
                         android:paddingLeft="15dp"
                         android:paddingTop="6dp"
                         android:textColor="#000000"
                         android:textColorHint="#8F8F8F"
                         android:textSize="20sp"
+                        android:textStyle="bold"
                         tools:layout_editor_absoluteX="0dp"
                         tools:layout_editor_absoluteY="427dp" />
                 </LinearLayout>

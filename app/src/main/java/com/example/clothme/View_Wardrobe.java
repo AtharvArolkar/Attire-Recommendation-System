@@ -61,7 +61,7 @@ public class View_Wardrobe extends AppCompatActivity {
         im=findViewById(R.id.imageViewCloth);
         Intent i=getIntent();
         ClothesDB db=new ClothesDB(this);
-        cm=db.getCloth(MainActivity.user.getUsername(),i.getExtras().getString("cloth"),i.getExtras().getString("clothId"));
+        cm=db.getCloth(MainActivity.user.getUsername(),i.getExtras().getString("clothId"));
         final String path = getPathFromURI(Uri.parse(cm.getUri()));
         File f = new File(path);
         Uri uri = Uri.fromFile(f);
