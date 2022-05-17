@@ -33,7 +33,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="5dp"
                 android:background="@color/green"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/roboto_thin"
                 android:gravity="center"
                 android:text="Cloth"
                 android:textColor="@color/white"

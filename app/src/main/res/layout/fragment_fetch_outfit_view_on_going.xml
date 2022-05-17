@@ -44,7 +44,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="5dp"
                 android:background="@color/green"
-                android:fontFamily="casual"
+                android:fontFamily="@font/roboto_thin"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="24sp"
@@ -93,7 +93,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="5dp"
                 android:background="@color/green"
-                android:fontFamily="casual"
+                android:fontFamily="@font/roboto_thin"
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="24sp"
@@ -109,6 +109,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
+        android:fontFamily="@font/roboto_thin"
         android:text="Accept"
-        android:textColor="#FBFBFB" />
+        android:textColor="#FBFBFB"
+        android:textStyle="bold" />
 </LinearLayout>

@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="casual"
+                    android:fontFamily="@font/roboto_thin"
                     android:text="Type"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="casual"
+                    android:fontFamily="@font/roboto_thin"
                     android:text="Fabric"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="casual"
+                    android:fontFamily="@font/roboto_thin"
                     android:text="Color"
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
@@ -112,8 +112,10 @@
                     android:layout_gravity="bottom"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto_thin"
                     android:text="Update"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/cancel"
@@ -122,8 +124,10 @@
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
+                    android:fontFamily="@font/roboto_thin"
                     android:text="Cancel"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

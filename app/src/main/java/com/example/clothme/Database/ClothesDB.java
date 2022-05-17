@@ -166,16 +166,16 @@ public class ClothesDB extends SQLiteOpenHelper {
         return id;
     }
 
-    public ClothesModel getCloth(String username, String Clothtype, String reqID) {
+    public ClothesModel getCloth(String username,String reqID) {
         SQLiteDatabase db = ClothesDB.this.getReadableDatabase();//
-        String cat = null;
-        if (Arrays.asList(TopWear).contains(Clothtype)) {
-            cat = "topwear";
-        } else if(Arrays.asList(BottomWear).contains(Clothtype)){
-            cat = "bottomwear";
-        }else{
-            cat = "outerwear";
-        }
+//        String cat = null;
+//        if (Arrays.asList(TopWear).contains(Clothtype)) {
+//            cat = "topwear";
+//        } else if(Arrays.asList(BottomWear).contains(Clothtype)){
+//            cat = "bottomwear";
+//        }else{
+//            cat = "outerwear";
+//        }
 //        if (Arrays.asList(TopWear).contains(Clothtype)) {
 //            cat = "topwear";
 //        } else {
