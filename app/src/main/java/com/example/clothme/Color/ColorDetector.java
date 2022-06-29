@@ -1,6 +1,8 @@
 package com.example.clothme.Color;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.util.Log;
 
 import java.sql.Array;
 import java.util.*;
@@ -333,17 +335,23 @@ public class ColorDetector {
 //        return getMostCommonColor(colorMap);
         int[] rgb=null;
         String color=null;
+        String hex=null;
         try {
             rgb = getMostCommonColor(colorMap);
-            int min=100000;
-            for(String key :colorDict.keySet() ){
-                Integer[] a=colorDict.get(key);
-                int Euclidean=(int)Math.sqrt(Math.pow(((rgb[0]-a[0])*0.3),2)+Math.pow(((rgb[1]-a[1])*0.59),2)+Math.pow(((rgb[2]-a[2])*0.11),2));
-                if(Euclidean<min){
-                    min=Euclidean;
-                    color=key;
-                }
-            }
+            int red=rgb[0];
+            int RGB = android.graphics.Color.rgb(rgb[0], rgb[1], rgb[2]);
+//            Color c=new Color(red,red,red);
+            hex="#"+Integer.toHexString(RGB);
+            Log.v("AAA",hex);
+//            int min=100000;
+//            for(String key :colorDict.keySet() ){
+//                Integer[] a=colorDict.get(key);
+//                int Euclidean=(int)Math.sqrt(Math.pow(((rgb[0]-a[0])*0.3),2)+Math.pow(((rgb[1]-a[1])*0.59),2)+Math.pow(((rgb[2]-a[2])*0.11),2));
+//                if(Euclidean<min){
+//                    min=Euclidean;
+//                    color=key;
+//                }
+//            }
         }catch (IndexOutOfBoundsException e){
             color="NULL";
         }
@@ -363,7 +371,7 @@ public class ColorDetector {
 
 
 //        return (rgb[0]+","+rgb[1]+","+rgb[2]);
-        return color;
+        return hex;
     }
 
 
