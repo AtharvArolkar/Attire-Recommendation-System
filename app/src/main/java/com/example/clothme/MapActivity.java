@@ -65,6 +65,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //                    LOCATION_REQUEST_CODE);
 //        }
         done=findViewById(R.id.done_button);
+
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -6,11 +6,14 @@ public class ClothesModel {
     String uri;
     String clothtype;
     String color;
-
-
-
     String fabric;
     String category;
+    String pattern;
+    String lastworn;
+
+    public String getPattern() {
+        return pattern;
+    }
 
     public String getUsername() {
         return username;
@@ -38,7 +41,9 @@ public class ClothesModel {
         return category;
     }
 
-    public ClothesModel(String username,String id, String uri, String clothtype, String color, String fabric, String category) {
+    public String getLastworn() { return lastworn; }
+
+    public ClothesModel(String username,String id, String uri, String clothtype, String color, String fabric, String category,String pattern,String lastworn) {
         this.username = username;
         this.id=id;
         this.uri = uri;
@@ -46,5 +51,7 @@ public class ClothesModel {
         this.color = color;
         this.fabric = fabric;
         this.category = category;
+        this.pattern=pattern;
+        this.lastworn=lastworn;
     }
 }

@@ -32,7 +32,7 @@ public class OuterWearFragment extends Fragment {
         displayImages=view.findViewById(R.id.recylcer_outer_wear);
         ClothesDB db=new ClothesDB(getContext());
         ArrayList<ImageModel> outer_wear_images=db.getImage(MainActivity.user.getUsername(),"outerwear",getContext());
-        ImageAdapter adapter=new ImageAdapter(outer_wear_images, getContext());
+        ImageAdapter adapter=new ImageAdapter(outer_wear_images, getContext(),displayImages,"outerwear");
         displayImages.setAdapter(adapter);
         StaggeredGridLayoutManager staggered=new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         return view;
@@ -42,7 +42,7 @@ public class OuterWearFragment extends Fragment {
         super.onResume();
         ClothesDB db=new ClothesDB(getContext());
         ArrayList<ImageModel> outerwear_wear_images=db.getImage(MainActivity.user.getUsername(),"outerwear",getContext());
-        ImageAdapter adapter=new ImageAdapter(outerwear_wear_images, getContext());
+        ImageAdapter adapter=new ImageAdapter(outerwear_wear_images, getContext(),displayImages,"outerwear");
         displayImages.setAdapter(adapter);
         StaggeredGridLayoutManager staggered=new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         displayImages.setLayoutManager(staggered);

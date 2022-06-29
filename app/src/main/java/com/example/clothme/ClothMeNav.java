@@ -3,14 +3,9 @@ package com.example.clothme;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -19,15 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.clothme.Database.AccountDB;
-import com.example.clothme.Models.ImageModel;
 import com.example.clothme.Models.UserModel;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -38,7 +30,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.clothme.databinding.ActivityClothMeNavBinding;
 
 import java.io.File;
-import java.io.IOException;
 
 public class ClothMeNav extends AppCompatActivity {
 
@@ -126,14 +117,20 @@ public class ClothMeNav extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.action_settings:
+            case R.id.profile_settings:{
+                Intent i = new Intent(this, EditProfile.class);
+                startActivity(i);
+                break;
+            }
+            case R.id.log_out: {
                 db.logOut(MainActivity.user.getUsername());
-                Toast.makeText(this,"Logged Out",Toast.LENGTH_SHORT).show();
-                MainActivity.user=null;
-                Intent i=new Intent(this,MainActivity.class);
+                Toast.makeText(this, "Logged Out", Toast.LENGTH_SHORT).show();
+                MainActivity.user = null;
+                Intent i = new Intent(this, MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
                 return true;
+            }
         }
         return false;
 

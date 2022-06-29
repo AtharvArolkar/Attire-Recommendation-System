@@ -47,6 +47,7 @@ import com.example.clothme.R;
 import com.example.clothme.databinding.FragmentGalleryBinding;
 import com.example.clothme.ml.Female91;
 import com.example.clothme.ml.Male96Pool;
+import com.example.clothme.ml.PatternDetection;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.yalantis.ucrop.UCrop;
 
@@ -91,14 +92,32 @@ public class GalleryFragment extends Fragment {
 //            "Shorts","Sweaters","Track Pants","Trousers","T-Shirts"};
 
     String[] menlabels = new String[]{"Blazer", "Innerwear Vests", "Jacket", "Jeans", "Shirt", "Long Sleeves Shirt", "Lounge Pants", "Pajama",
-            "Sherwanis", "Shirt", "Shorts", "Sweaters", "Track Pants", "Tracksuits", "Trousers", "T-Shirt"};
+            "Shirt", "Shirt", "Shorts", "Sweaters", "Track Pants", "Tracksuits", "Trousers", "T-Shirt"};
 
 
 
 
-    String[] womenlabels=new String[]{"Jacket","Pants","Shorts","Skirts","Tank Tops","Tops", "Blazer","Capri & Cropped Pants","Cardigans","Coats",
-            "Dresses","Dresses","Dresses","Gowns","Hoodies","Jackets","Jeans","Jumpsuits", "Skirts","Leggings","Skirts","Skirts","Pants","Shirt","Shorts",
-            "Skirts","Suits","Sweaters","Sweatshirts","T-Shirt","Tank Tops","Tights","Tops","Vests"};
+    String[] womenlabels=new String[]{"Jacket","Pants","Shorts","Skirt","Tank Top","Top", "Blazer","Capri & Cropped Pants","Cardigans","Coat",
+            "Dress","Dress","Dress","Gown","Hoodies","Jacket","Jeans","Jumpsuits", "Skirt","Leggings","Skirt","Skirt","Pants","Shirt","Shorts",
+            "Skirt","Suits","Sweater","Sweatshirts","T-Shirt","Tank Top","Tights","Top","Vests"};
+
+    String[] pattern=new String[]{"abstract",
+            "abstract",
+            "abstract",
+            "geometry",
+            "floral",
+            "geometry",
+            "geometry",
+            "geometry",
+            "abstract",
+            "plain",
+            "geometry",
+            "geometry",
+            "abstract",
+            "checks",
+            "geometry",
+            "stripes",
+            "abstract"};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -109,7 +128,7 @@ public class GalleryFragment extends Fragment {
         View root = binding.getRoot();
 
         clothdb = new ClothesDB(getActivity());
-        gender = user.getGender();
+        gender = MainActivity.user.getGender();
         displayImages = root.findViewById(R.id.displayImages);
         addClothes = root.findViewById(R.id.id_addPic);
         done = root.findViewById(R.id.id_doneUpload);
@@ -150,6 +169,7 @@ public class GalleryFragment extends Fragment {
                     im.setPic(bitmapImage);
                     img = Bitmap.createScaledBitmap(bitmapImage, 256, 256, true);
                     im = modelEvaluate(im, img);
+                    String pattern=getPattern(im,img);
                     images.add(im);
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("What is the fabric of the cloth?");
@@ -169,8 +189,8 @@ public class GalleryFragment extends Fragment {
                             if(color== null){
                                 Toast.makeText(getContext(),"Cant Detect Color, Plz Add Manually",Toast.LENGTH_LONG).show();
                             }
-                            Toast.makeText(getContext(),""+color,Toast.LENGTH_LONG).show();
-                            Boolean success = clothdb.insertData(user.getUsername(), resultUri, im.getName(), color, fabric);
+//                            Toast.makeText(getContext(),""+color,Toast.LENGTH_LONG).show();
+                            Boolean success = clothdb.insertData(user.getUsername(), resultUri, im.getName(), color, fabric,pattern);
                             if (success) {
                                 Toast.makeText(getContext(), "Inserted Successfully", Toast.LENGTH_SHORT).show();
                             } else {
@@ -194,6 +214,40 @@ public class GalleryFragment extends Fragment {
             Toast.makeText(getContext(),"Image Not Captured",Toast.LENGTH_SHORT).show();
             Log.d("Error",e.toString());
         }
+    }
+    public String getPattern(ImageModel im, Bitmap img){
+//        Toast.makeText(getContext(),"hi",Toast.LENGTH_SHORT).show();
+
+        float max = 0;
+        int index = 0;
+        if(im.getName().equals("Shirt")){
+            try {
+                img = Bitmap.createScaledBitmap(bitmapImage, 64, 64, true);
+                PatternDetection model = PatternDetection.newInstance(getContext());
+                TensorImage tensorImage = new TensorImage(DataType.FLOAT32);
+                tensorImage.load(img);
+                ByteBuffer byteBuffer = tensorImage.getBuffer();
+                // Creates inputs for reference.
+                TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 64, 64, 3}, DataType.FLOAT32);
+                inputFeature0.loadBuffer(byteBuffer);
+                PatternDetection.Outputs outputs = model.process(inputFeature0);
+                TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+                float[] out = outputFeature0.getFloatArray();
+                for (int i = 0; i < out.length; i++) {
+                    if (out[i] > max) {
+                        index = i;
+                        max = out[i];
+                    }
+                }
+
+//                Toast.makeText(getContext(),""+pattern[index],Toast.LENGTH_SHORT).show();
+                model.close();
+            } catch (IOException e) {
+                Toast.makeText(getContext(),"Error",Toast.LENGTH_SHORT).show();
+                // TODO Handle the exception
+            }
+        }
+       return pattern[index] ;
     }
     public ImageModel modelEvaluate(ImageModel im, Bitmap img) {
         try {
@@ -240,7 +294,9 @@ public class GalleryFragment extends Fragment {
                     }
                 }
                 im.setText(womenlabels[index]);
+                model.close();
             }
+
         } catch (IOException e) {
             // TODO Handle the exception
             Toast.makeText(getContext(), "Failed to Load Model", Toast.LENGTH_SHORT).show();

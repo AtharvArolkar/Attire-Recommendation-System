@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.clothme.Adapter.ImageAdapter;
 import com.example.clothme.Database.ClothesDB;
@@ -35,7 +36,7 @@ public class BottomWearFragment extends Fragment {
         displayImages=view.findViewById(R.id.recycler_bottom_wear);
         ClothesDB db=new ClothesDB(getContext());
         ArrayList<ImageModel> bottom_wear_images=db.getImage(MainActivity.user.getUsername(),"bottomwear",getContext());
-        ImageAdapter adapter=new ImageAdapter(bottom_wear_images, getContext());
+        ImageAdapter adapter=new ImageAdapter(bottom_wear_images, getContext(),displayImages,"bottomwear");
         displayImages.setAdapter(adapter);
         StaggeredGridLayoutManager staggered=new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         displayImages.setLayoutManager(staggered);
@@ -48,7 +49,7 @@ public class BottomWearFragment extends Fragment {
         super.onResume();
         ClothesDB db=new ClothesDB(getContext());
         ArrayList<ImageModel> bottom_wear_images=db.getImage(MainActivity.user.getUsername(),"bottomwear",getContext());
-        ImageAdapter adapter=new ImageAdapter(bottom_wear_images, getContext());
+        ImageAdapter adapter=new ImageAdapter(bottom_wear_images, getContext(),displayImages,"bottomwear");
         displayImages.setAdapter(adapter);
         StaggeredGridLayoutManager staggered=new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         displayImages.setLayoutManager(staggered);

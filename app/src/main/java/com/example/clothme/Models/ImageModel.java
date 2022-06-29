@@ -6,6 +6,16 @@ import android.net.Uri;
 public class ImageModel {
     Bitmap image;
     String id;
+
+    public ImageModel() {
+    }
+
+    public ImageModel(Bitmap image, String id, String text) {
+        this.image = image;
+        this.id = id;
+        this.text = text;
+    }
+
     String text;
 
     public Bitmap getBitmap() {

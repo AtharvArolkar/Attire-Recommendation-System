@@ -35,7 +35,7 @@ public class TopWearFragment extends Fragment {
         ClothesDB db=new ClothesDB(getContext());
         ArrayList<ImageModel> top_wear_images=db.getImage(MainActivity.user.getUsername(),"topwear",getContext());
 //        Log.v("AAA",top_wear_images.get(0).getName());
-        ImageAdapter adapter=new ImageAdapter(top_wear_images, getContext());
+        ImageAdapter adapter=new ImageAdapter(top_wear_images, getContext(),displayImages,"topwear");
         displayImages.setAdapter(adapter);
         StaggeredGridLayoutManager staggered=new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         displayImages.setLayoutManager(staggered);
@@ -48,7 +48,7 @@ public class TopWearFragment extends Fragment {
         super.onResume();
         ClothesDB db=new ClothesDB(getContext());
         ArrayList<ImageModel> top_wear_images=db.getImage(MainActivity.user.getUsername(),"topwear",getContext());
-        ImageAdapter adapter=new ImageAdapter(top_wear_images, getContext());
+        ImageAdapter adapter=new ImageAdapter(top_wear_images, getContext(),displayImages,"topwear");
         displayImages.setAdapter(adapter);
         StaggeredGridLayoutManager staggered=new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         displayImages.setLayoutManager(staggered);

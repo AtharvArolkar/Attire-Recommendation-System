@@ -13,15 +13,19 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.clothme.MainActivity;
+import com.example.clothme.Models.ClothesModel;
 import com.example.clothme.Models.UserModel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class AccountDB extends SQLiteOpenHelper {
     public static final String dbname="database.db";
     public static final String TABLE_NAME="Accounts";
     public static final String TABLE_NAME1="clothesimage";
+    public static final String TABLE_NAME2="eventhistory";
     public AccountDB(@Nullable Context context) {
         super(context, dbname, null, 1);
     }
@@ -30,10 +34,13 @@ public class AccountDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql="create table "+TABLE_NAME+"(username text primary key, fname text,lname text, gender text,age text,password text," +
                 "profilepic text, loggedIn integer)";
-        String sql1="create table " +TABLE_NAME1+ " (username text,imageID text,imageUri text, ClothType text, color text, fabric text,category text," +
+        String sql1="create table " +TABLE_NAME1+ " (username text,imageID text,imageUri text, ClothType text, color text, fabric text,category text,pattern text,lastworn text DEFAULT ('01 01 1970')," +
+                "FOREIGN KEY(username) REFERENCES Accounts(username))";
+        String sql2="create table " +TABLE_NAME2+ " (historyNumber integer, username text,occasion text,date text,time text,location text,topId text,bottomId text,outerId text," +
                 "FOREIGN KEY(username) REFERENCES Accounts(username))";
         db.execSQL(sql);
         db.execSQL(sql1);
+        db.execSQL(sql2);
     }
 
     @Override
@@ -156,5 +163,22 @@ public class AccountDB extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return username;
+    }
+    public void updateAccount(UserModel user) {
+//        UserModel user=new UserModel(user_name,first_name,last_name,gender,user_age,pass_word,profilePath);
+        SQLiteDatabase db=this.getReadableDatabase();
+        ContentValues cn=new ContentValues();
+        cn.put("fname",user.getFname());
+        cn.put("lname",user.getLname());
+        cn.put("gender",user.getGender());
+        cn.put("age",user.getAge());
+        cn.put("password",user.getPassword());
+
+//        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//        user.getProfilePic().compress(Bitmap.CompressFormat.PNG, 0, stream);
+//        byte[] image=stream.toByteArray();
+
+        cn.put("profilepic",user.getProfilePic().toString());
+        long r = db.update(TABLE_NAME, cn, "username =? ", new String[]{user.getUsername()});
     }
 }

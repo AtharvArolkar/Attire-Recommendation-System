@@ -1,6 +1,5 @@
 package com.example.clothme.Fragments;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -19,25 +18,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.example.clothme.Database.ClothesDB;
-import com.example.clothme.MainActivity;
 import com.example.clothme.MapActivity;
-import com.example.clothme.Models.ClothesModel;
-import com.example.clothme.Models.ImageModel;
 import com.example.clothme.Models.WeatherData;
 import com.example.clothme.R;
-import com.example.clothme.Recommendation.ClothLogic;
-import com.example.clothme.WeatherAPI.DailyPojo;
 import com.example.clothme.WeatherAPI.RetrofitInstance;
 import com.example.clothme.WeatherAPI.TimeStampToDate;
 import com.example.clothme.WeatherAPI.WeatherAPIInterface;
@@ -46,11 +35,9 @@ import com.example.clothme.WeatherAPI.WeatherPojo;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
@@ -61,6 +48,7 @@ import retrofit2.Response;
 public class FetchOutfitInputDetails extends Fragment {
     Spinner events;
     String locationSelected="",dateSelected="",eventSelected="",timeSelected="";
+    String timeText,locationText,dateText;
     TextView date;
     static public int hour,difference;
     ArrayList<WeatherData> weatherData=new ArrayList<WeatherData>();
@@ -104,6 +92,7 @@ public class FetchOutfitInputDetails extends Fragment {
                                 FetchOutfitInputDetails.hour=hourOfDay;
                                 timePick.setText(hourOfDay + ":" + minute);
                                 timeSelected=hourOfDay + ":" + minute;
+                                timeText=timeSelected;
 
                             }
                         }, hour, minute, false);
@@ -170,9 +159,10 @@ public class FetchOutfitInputDetails extends Fragment {
                         int dateDifference = (int) getDateDiff(new SimpleDateFormat("yyyy-MM-dd"), selectedDate, afterDate);
                         difference=(int) getDateDiff(new SimpleDateFormat("yyyy-MM-dd"), currentDay,selectedDate);
                         if(dateDifference>=0){
-                            dateSelected=year+"/"+month+"/"+day;
+                            dateSelected=day+" "+month+" "+year;
 //                            difference=dateDifference;
                             date.setText(dateSelected);
+                            dateText=dateSelected;
                         }else{
                             date.setText("");
                             Toast.makeText(getContext(),"Date Limit Exceeded,Please Select a date in next 7 days i.e before "+afterDate,Toast.LENGTH_LONG).show();
@@ -216,6 +206,9 @@ public class FetchOutfitInputDetails extends Fragment {
                                 Bundle b=new Bundle();
                                 b.putInt("Temperature",Math.round(temperature));
                                 b.putString("Event",eventSelected);
+                                b.putString("DateOfEvent",dateText);
+                                b.putString("TimeOfEvent",timeText);
+                                b.putString("LocationOfEvent",locationText);
                                 ff.setArguments(b);
                                 transaction.replace(R.id.linearDisplay, ff);
                                 eventSelected="";
@@ -259,6 +252,7 @@ public class FetchOutfitInputDetails extends Fragment {
             double lat=data.getDoubleExtra("lat",0.0);
             double lon=data.getDoubleExtra("long",0.0);
             locationSelected=city+","+state;
+            locationText=locationSelected+","+country;
             WeatherAPIInterface weatherAPIInterface= RetrofitInstance.getRetrofit().create(WeatherAPIInterface.class);
             weatherAPIInterface.getWeather(lat,lon,"minutely,hourly,alerts","metric","en",apiKey).enqueue(new Callback<WeatherPojo>() {
                 @Override
