@@ -28,9 +28,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_baseline_refresh" />
-                            <entry key="sourceFile" value="C:\Users\athar\AndroidStudioProjects\ClothMe" />
+                            <entry key="outputName" value="ic_icons8_refresh" />
+                            <entry key="sourceFile" value="C:\Users\athar\Pictures\icons8-refresh.svg" />
                           </map>
                         </option>
                       </PersistentState>

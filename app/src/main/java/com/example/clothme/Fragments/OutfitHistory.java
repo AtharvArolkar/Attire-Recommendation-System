@@ -18,6 +18,7 @@ import com.example.clothme.Models.HistoryModel;
 import com.example.clothme.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class OutfitHistory extends Fragment {
@@ -33,6 +34,7 @@ public class OutfitHistory extends Fragment {
         recyclerView=view.findViewById(R.id.id_history_display);
         HistoryDB db=new HistoryDB(getContext());
         ArrayList<HistoryModel> hm=db.fetchHistory(MainActivity.user.getUsername());
+        Collections.reverse(hm);
 //        Toast.makeText(getContext(),""+hm.size(),Toast.LENGTH_SHORT).show();
         HistoryMainAdapter adapter=new HistoryMainAdapter(hm,getContext());
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());

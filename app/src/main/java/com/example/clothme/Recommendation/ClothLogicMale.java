@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.clothme.Database.ClothesDB;
 import com.example.clothme.Fragments.FetchOutfitSelectBase;
@@ -73,6 +74,7 @@ public class ClothLogicMale {
 
     public void all_predict(String userid, String uri, String clothtype, String color, String fabric, String category, String rating
             , String imageid) {
+//        Toast.makeText(context,weather,Toast.LENGTH_SHORT).show();
         ArrayList<String> list = new ArrayList<>();
         list.add(userid);
         list.add(imageid);
@@ -88,6 +90,9 @@ public class ClothLogicMale {
         } else if (Objects.equals(category, "outerwear")) {
             outer.add(list);
         }
+//        else{
+//            Toast.makeText(context,"Rain",Toast.LENGTH_SHORT).show();
+//        }
     }
 
     public ArrayList<ImageModel> generateOutfit(ArrayList<ArrayList<String>> top, ArrayList<ArrayList<String>> bottom,

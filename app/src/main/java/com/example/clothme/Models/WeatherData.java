@@ -6,13 +6,17 @@ public class WeatherData {
     float aff;
     float eve;
     float nig;
+    String description;
 
-    public WeatherData(String date, float mor, float aff, float eve, float nig) {
+
+
+    public WeatherData(String date, float mor, float aff, float eve, float nig, String description) {
         Date = date;
         this.mor = mor;
         this.aff = aff;
         this.eve = eve;
         this.nig = nig;
+        this.description=description;
     }
 
     public String getDate() {
@@ -34,4 +38,5 @@ public class WeatherData {
     public float getNig() {
         return nig;
     }
+    public String getDescription() { return description; }
 }
