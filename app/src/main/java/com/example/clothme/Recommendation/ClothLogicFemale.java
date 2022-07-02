@@ -73,7 +73,7 @@ public class ClothLogicFemale {
     //    public void setOccasion(String occasion) {
 //        this.occasion = occasion;
 //    }
-    public ArrayList<ImageModel> convertData(ArrayList<ClothesModel> cm, int temperature, String occasion, Context context) {
+    public ArrayList<ImageModel> convertData(ArrayList<ClothesModel> cm, int temperature, String occasion,Context context) {
         this.context = context;
         setTemperature(temperature);
         setOccasion(occasion);

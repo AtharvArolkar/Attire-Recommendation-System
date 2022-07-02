@@ -181,6 +181,9 @@ public class DailyPojo {
     public void setUvi(float uvi) {
         this.uvi = uvi;
     }
+
+    public ArrayList<DailyPojo.weather> getWeather() { return weather; }
+
     public static class Feels_like {
         private float day;
         private float night;

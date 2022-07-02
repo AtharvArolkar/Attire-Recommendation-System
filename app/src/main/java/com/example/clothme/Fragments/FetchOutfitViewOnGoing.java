@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,16 +30,20 @@ import com.example.clothme.MainActivity;
 import com.example.clothme.Models.HistoryModel;
 import com.example.clothme.Models.ReturnClothLogicModelLists;
 import com.example.clothme.R;
+import com.example.clothme.Recommendation.ShoeRecommend;
 import com.example.clothme.ui.home.HomeFragment;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class FetchOutfitViewOnGoing extends Fragment {
     Button back, next, prev, accept;
     ImageView topwear, bottomwear, outerwear, footwear;
-    TextView topTV, bottomTV, outerTv, shoeTv, shoeTvTitle, shoeTvRecommend;
+    TextView topTV, bottomTV, outerTv, shoeTv, shoeTvTitle, shoeTvRecommend,pleaseCarry;
     int position = 0, temperature;
-    String event,dateText,timeText,locationText;
+    String event,dateText,timeText,locationText,weatherText,dayTime;
+    ImageView accessoriesRecommend1,accessoriesRecommend2;
+    LinearLayout alsoRecommend;
 
     public FetchOutfitViewOnGoing() {
         // Required empty public constructor
@@ -63,17 +68,22 @@ public class FetchOutfitViewOnGoing extends Fragment {
         shoeTv = view.findViewById(R.id.id_shoeTv);
         shoeTvTitle = view.findViewById(R.id.id_shoeTvTitle);
         shoeTvRecommend = view.findViewById(R.id.id_shoeTvRecommend);
+        pleaseCarry=view.findViewById(R.id.id_pleaseCarry);
+        accessoriesRecommend1=view.findViewById(R.id.id_pleaseCarryImage1);
+        accessoriesRecommend2=view.findViewById(R.id.id_pleaseCarryImage2);
+        alsoRecommend=view.findViewById(R.id.alsoRecomment);
 
         topwear.setImageResource(R.drawable.not_found);
         bottomwear.setImageResource(R.drawable.not_found);
         outerwear.setImageResource(R.drawable.not_found);
+
 //        footwear.setImageResource(R.drawable.formal);
         topTV.setText("TopWear");
         bottomTV.setText("BottomWear");
         outerTv.setText("OuterWear");
         shoeTvTitle.setText("Footwear");
         shoeTvRecommend.setText("Recommended");
-        shoeTv.setText("Recommended: Sandals, Slippers");
+//        shoeTv.setText("Recommended: Sandals, Slippers");
 
         Bundle b = getArguments();
         temperature = b.getInt("Temperature");
@@ -81,7 +91,24 @@ public class FetchOutfitViewOnGoing extends Fragment {
         dateText=b.getString("DateOfEvent");
         timeText=b.getString("TimeOfEvent");
         locationText=b.getString("LocationOfEvent");
+        weatherText=b.getString("Weather");
+        dayTime=b.getString("DayTime");
 
+//        Toast.makeText(getContext(), weatherText, Toast.LENGTH_SHORT).show();
+//        weatherText="clear sky";
+        if(weatherText.toLowerCase(Locale.ROOT).equals("clear sky")){
+            if(dayTime.equals("Morning")|| dayTime.equals("Afternoon")){
+                pleaseCarry.setText("Please Carry:");
+                accessoriesRecommend1.setImageResource(R.drawable.sunglasses);
+                accessoriesRecommend2.setImageResource(R.drawable.cap);
+            }
+        }else if(weatherText.toLowerCase(Locale.ROOT).equals("rain")){
+            pleaseCarry.setText("Please Carry:");
+            accessoriesRecommend1.setImageResource(R.drawable.raincoat);
+            accessoriesRecommend2.setImageResource(R.drawable.umbrella);
+        }else{
+            alsoRecommend.setVisibility(View.GONE);
+        }
         ArrayList<ReturnClothLogicModelLists> listofPairs = (ArrayList<ReturnClothLogicModelLists>) b.getSerializable("ListOfPairs");
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +123,8 @@ public class FetchOutfitViewOnGoing extends Fragment {
         Log.v("Temp", "Hi");
         Log.v("TempTemp", "" + temperature);
         Log.v("TempEvent", "" + event);
+        ShoeRecommend shoeRecommend=new ShoeRecommend();
+        shoeTv.setText(shoeRecommend.shoesSuggest(event,MainActivity.user.getGender()));
         ReturnClothLogicModelLists rl = listofPairs.get(position);
         for (int i = 0; i < rl.getPairs().size(); i++) {
             if (rl.getPairs().get(i).size() > 1) {
@@ -129,7 +158,7 @@ public class FetchOutfitViewOnGoing extends Fragment {
                             } else if (i == 1) {
                                 bottomwear.setImageURI(imageUri);
                                 bottomTV.setText(name);
-                            } else if (i == 2) {
+                            } else if (i == 2 ) {
                                 outerwear.setImageURI(imageUri);
                                 outerTv.setText(name);
                             }

@@ -30,15 +30,5 @@
         <item>dinner party</item>
         <item>beach party</item>
         <item>sports</item>
-        <!--        -->
-        <!--        <item>Select Event</item>-->
-        <!--        <item>Casual/Travel</item>-->
-        <!--        <item>Smart Casual</item>-->
-        <!--        <item>Beach Party</item>-->
-        <!--        <item>Cocktail Party</item>-->
-        <!--        <item>Ethnics</item>-->
-        <!--        <item>Wedding</item>-->
-        <!--        <item>Interview</item>-->
-        <!--        <item>Sports</item>-->
     </string-array>
 </resources>

@@ -36,7 +36,7 @@ public class FetchOutfitSelectBase extends Fragment implements FetchOutfitAdapte
     ClothLogicMale cma;
     ClothLogicFemale cf;
     int temperature;
-    String event,dateText,timeText,locationText;
+    String event,dateText,timeText,locationText,weatherText=null,dayTime;
     ArrayList<ImageModel> selectBaseImage=new ArrayList<>();
     int position=-1;
     public FetchOutfitSelectBase() {
@@ -51,6 +51,8 @@ public class FetchOutfitSelectBase extends Fragment implements FetchOutfitAdapte
         dateText=b.getString("DateOfEvent");
         timeText=b.getString("TimeOfEvent");
         locationText=b.getString("LocationOfEvent");
+        weatherText=b.getString("Weather");
+        dayTime=b.getString("DayTime");
         recyclerView=view.findViewById(R.id.recycler_select_base);
         feeling_lucky=view.findViewById(R.id.bt_feeling_lucky);
         feeling_lucky.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +80,8 @@ public class FetchOutfitSelectBase extends Fragment implements FetchOutfitAdapte
                 b1.putString("DateOfEvent",dateText);
                 b1.putString("TimeOfEvent",timeText);
                 b1.putString("LocationOfEvent",locationText);
+                b1.putString("Weather",weatherText);
+                b1.putString("DayTime",dayTime);
                 if(listOfPairs!=null){
                     b1.putSerializable("ListOfPairs",listOfPairs);
                 }
@@ -137,9 +141,11 @@ public class FetchOutfitSelectBase extends Fragment implements FetchOutfitAdapte
         b1.putString("DateOfEvent",dateText);
         b1.putString("TimeOfEvent",timeText);
         b1.putString("LocationOfEvent",locationText);
+        b1.putString("DayTime",dayTime);
         if(listOfPairs!=null){
             b1.putSerializable("ListOfPairs",listOfPairs);
         }
+        b1.putString("Weather",weatherText);
         ff.setArguments(b1);
         transaction.replace(R.id.linearDisplay, ff);
         transaction.commit();

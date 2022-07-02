@@ -48,7 +48,7 @@ import retrofit2.Response;
 public class FetchOutfitInputDetails extends Fragment {
     Spinner events;
     String locationSelected="",dateSelected="",eventSelected="",timeSelected="";
-    String timeText,locationText,dateText;
+    String timeText,locationText,dateText,weatherText=null,dayTime;
     TextView date;
     static public int hour,difference;
     ArrayList<WeatherData> weatherData=new ArrayList<WeatherData>();
@@ -188,13 +188,18 @@ public class FetchOutfitInputDetails extends Fragment {
                                 float temperature;
                                 if(hour<12 && hour >=5){
                                     temperature=weatherData.get(difference).getMor();
+                                    dayTime="Morning";
                                 }else if(hour<17 && hour >=12){
                                     temperature=weatherData.get(difference).getAff();
+                                    dayTime="Afternoon";
                                 }else if(hour<20 && hour >=17){
                                     temperature=weatherData.get(difference).getEve();
+                                    dayTime="Evening";
                                 }else{
                                     temperature=weatherData.get(difference).getNig();
+                                    dayTime="Night";
                                 }
+                                weatherText=weatherData.get(difference).getDescription();
                                 Log.d("AAA",""+temperature);
 //                                ClothLogic c=new ClothLogic();
 //                                ClothesDB db=new ClothesDB(getContext());
@@ -209,6 +214,8 @@ public class FetchOutfitInputDetails extends Fragment {
                                 b.putString("DateOfEvent",dateText);
                                 b.putString("TimeOfEvent",timeText);
                                 b.putString("LocationOfEvent",locationText);
+                                b.putString("Weather",weatherText);
+                                b.putString("DayTime",dayTime);
                                 ff.setArguments(b);
                                 transaction.replace(R.id.linearDisplay, ff);
                                 eventSelected="";
@@ -270,7 +277,8 @@ public class FetchOutfitInputDetails extends Fragment {
                            float aff=pojo.getDaily().get(i).getTemp().getDay();
                            float eve=pojo.getDaily().get(i).getTemp().getEve();
                            float nig=pojo.getDaily().get(i).getTemp().getNight();
-                           WeatherData wm=new WeatherData(date,mor,aff,eve,nig);
+                           String description=pojo.getDaily().get(i).getWeather().get(0).getMain();
+                           WeatherData wm=new WeatherData(date,mor,aff,eve,nig,description);
                            weatherData.add(wm);
                         }
 //                        ArrayList< Object > daily_forecast=pojo.get
