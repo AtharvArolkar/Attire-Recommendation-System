@@ -11,6 +11,7 @@
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.186" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/drawable/location.xml" value="0.2355" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/drawable/shape.xml" value="0.2355" />
+        <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/drawable/shape1.xml" value="0.196" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/drawable/side_nav_bar.xml" value="0.11" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/font/aladin.xml" value="0.17635135135135135" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/activity_app_input1.xml" value="0.2" />
@@ -28,7 +29,7 @@
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/custom_confirm_address.xml" value="0.15675675675675677" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/fragment_bottom_wear.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/fragment_fetch_outfit.xml" value="0.16799999999999998" />
-        <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/fragment_fetch_outfit_input_details.xml" value="0.16" />
+        <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/fragment_fetch_outfit_input_details.xml" value="0.264" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/fragment_fetch_outfit_select_base.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/fragment_fetch_outfit_view_on_going.xml" value="0.4" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/fragment_gallery.xml" value="0.176" />
@@ -39,7 +40,7 @@
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/fragment_top_wear.xml" value="0.22239583333333332" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/nav_header_cloth_me_nav.xml" value="0.176" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/sample_history_image_layout.xml" value="0.264" />
-        <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/sample_history_layout.xml" value="0.264" />
+        <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/sample_history_layout.xml" value="0.4" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/sample_image.xml" value="0.4" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/sample_image2.xml" value="0.23645833333333333" />
         <entry key="..\:/Users/athar/AndroidStudioProjects/ClothMe/app/src/main/res/layout/sample_image_home.xml" value="0.5146666666666667" />

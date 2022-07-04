@@ -1199,7 +1199,14 @@ public class ClothLogicMale {
             case "topwear":
                 if (bottomrightwear.isEmpty()) {
 //                    for (int i = 0; i < toprightwear.size(); i++) {
+                    for (int i = 0; i < toprightwear.size(); i++) {
+                        if (Objects.equals(toprightwear.get(i).get(1), baseoutfitid)) {
+                            base = toprightwear.get(i);
+//                            System.out.println(base);
+                        }
+                    }
                     ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+
                     outfitPairs.add(base);
                     outfitPairs.add(strBottom);
                     outfitPairs.add(str);
@@ -1209,7 +1216,7 @@ public class ClothLogicMale {
                     for (int i = 0; i < toprightwear.size(); i++) {
                         if (Objects.equals(toprightwear.get(i).get(1), baseoutfitid)) {
                             base = toprightwear.get(i);
-                            System.out.println(base);
+//                            System.out.println(base);
                         }
                     }
                     if (outerrightwear.isEmpty()) {
@@ -1219,7 +1226,7 @@ public class ClothLogicMale {
                             outfitPairs.add(bottomrightwear.get(j));
                             outfitPairs.add(str);
                             outfits.add(outfitPairs);
-                            System.out.println(outfits);
+//                            System.out.println(outfits);
                         }
                     } else {
                         for (int j = 0; j < bottomrightwear.size(); j++) {
@@ -1229,7 +1236,7 @@ public class ClothLogicMale {
                                 outfitPairs.add(bottomrightwear.get(j));
                                 outfitPairs.add(outerrightwear.get(k));
                                 outfits.add(outfitPairs);
-                                System.out.println(outfits);
+//                                System.out.println(outfits);
                             }
                         }
                     }
@@ -1239,6 +1246,12 @@ public class ClothLogicMale {
             case "bottomwear":
                 if (toprightwear.isEmpty()) {
 //                    for (int i = 0; i < bottomrightwear.size(); i++) {
+                    for (int i = 0; i <bottomrightwear.size(); i++) {
+                        if (Objects.equals(bottomrightwear.get(i).get(1), baseoutfitid)) {
+                            base = bottomrightwear.get(i);
+//                            System.out.println(base);
+                        }
+                    }
                     ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
                     outfitPairs.add(strTop);
                     outfitPairs.add(base);
@@ -1274,59 +1287,66 @@ public class ClothLogicMale {
 
                 break;
             case "feelinglucky":
-                if (toprightwear.isEmpty()) {
-                    for (int i = 0; i < bottomrightwear.size(); i++) {
-                        ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
-                        outfitPairs.add(strTop);
-                        outfitPairs.add(bottomrightwear.get(i));
-                        outfitPairs.add(str);
-                        outfits.add(outfitPairs);
-                    }
-                } else if (bottomrightwear.isEmpty()) {
-                    for (int i = 0; i < toprightwear.size(); i++) {
-                        ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
-                        outfitPairs.add(toprightwear.get(i));
-                        outfitPairs.add(strBottom);
-                        outfitPairs.add(str);
-                        outfits.add(outfitPairs);
-                    }
-                } else {
-                    if (outerrightwear.isEmpty()) {
+                if(toprightwear.isEmpty() && bottomrightwear.isEmpty() && outerrightwear.isEmpty()){
+                    Toast.makeText(getContext(),"No items detected, Please add Clothes to your Wardrobe",Toast.LENGTH_SHORT).show();
+                }else{
+                    if (toprightwear.isEmpty()) {
+                        for (int i = 0; i < bottomrightwear.size(); i++) {
+                            ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                            outfitPairs.add(strTop);
+                            outfitPairs.add(bottomrightwear.get(i));
+                            outfitPairs.add(str);
+                            outfits.add(outfitPairs);
+                        }
+                    } else if (bottomrightwear.isEmpty()) {
                         for (int i = 0; i < toprightwear.size(); i++) {
-                            for (int j = 0; j < bottomrightwear.size(); j++) {
-                                ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
-                                outfitPairs.add(toprightwear.get(i));
-                                outfitPairs.add(bottomrightwear.get(j));
-                                outfitPairs.add(str);
-                                outfits.add(outfitPairs);
-                            }
+                            ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                            outfitPairs.add(toprightwear.get(i));
+                            outfitPairs.add(strBottom);
+                            outfitPairs.add(str);
+                            outfits.add(outfitPairs);
                         }
                     } else {
-                        for (int i = 0; i < toprightwear.size(); i++) {
-                            for (int j = 0; j < bottomrightwear.size(); j++) {
-                                for (int k = 0; k < outerrightwear.size(); k++) {
+                        if (outerrightwear.isEmpty()) {
+                            for (int i = 0; i < toprightwear.size(); i++) {
+                                for (int j = 0; j < bottomrightwear.size(); j++) {
                                     ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
                                     outfitPairs.add(toprightwear.get(i));
                                     outfitPairs.add(bottomrightwear.get(j));
-                                    outfitPairs.add(outerrightwear.get(k));
-
+                                    outfitPairs.add(str);
                                     outfits.add(outfitPairs);
+                                }
+                            }
+                        } else {
+                            for (int i = 0; i < toprightwear.size(); i++) {
+                                for (int j = 0; j < bottomrightwear.size(); j++) {
+                                    for (int k = 0; k < outerrightwear.size(); k++) {
+                                        ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                                        outfitPairs.add(toprightwear.get(i));
+                                        outfitPairs.add(bottomrightwear.get(j));
+                                        outfitPairs.add(outerrightwear.get(k));
+
+                                        outfits.add(outfitPairs);
+                                    }
                                 }
                             }
                         }
                     }
                 }
 
+
                 break;
             default:
         }
-
+        System.out.println(outfits);
 
         ArrayList<ArrayList<ArrayList<String>>> pair = outfits;
         ArrayList<ReturnClothLogicModelLists> retList = new ArrayList<>();
         Log.v("BBBpair", "" + pair.size());
+
         ClothesDB db = new ClothesDB(getContext());
         for (int i = 0; i < pair.size(); i++) {
+            Log.v("BBBH","bye");
             int sum = 0;
             int z = 0;
             ColourMatch colorMatch = new ColourMatch();
@@ -1335,14 +1355,15 @@ public class ClothLogicMale {
             ArrayList<String> patternStringPair = new ArrayList<>();
             for (int j = 0; j < pair.get(i).size(); j++) {
                 z = j;
+                Log.v("BBBH",""+pair.get(i).size());
                 if (pair.get(i).get(j).size() > 1) {
                     sum += Integer.parseInt(pair.get(i).get(j).get(6));
                     ClothesModel cm = db.getCloth(pair.get(i).get(j).get(0), pair.get(i).get(j).get(1));
                     LastWornRank l = new LastWornRank();
                     long r = l.getRank(cm.getLastworn(), cm.getCategory());
-                    Log.v("BBBLastWorn", "" + r);
-                    Log.v("BBBLastWorn", "#" + pair.get(i).get(j).get(3).substring(3));
-                    colorStringPair.add("#" + pair.get(i).get(j).get(3).substring(3));
+//                    Log.v("BBBLastWorn", "" + r);
+                    Log.v("BBBLastWorn", "#" + pair.get(i).get(j).get(3));
+//                    colorStringPair.add("#" + pair.get(i).get(j).get(3).substring(3));
                     Log.v("CCCsum1", "" + cm.getPattern());
                     Log.v("DDDpatternVallue", "" + cm.getPattern());
                     patternStringPair.add(cm.getPattern());

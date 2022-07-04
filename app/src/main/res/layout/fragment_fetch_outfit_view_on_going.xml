@@ -14,8 +14,10 @@
         android:id="@+id/back_button"
         android:layout_width="60dp"
         android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
-        android:drawableEnd="@drawable/back_arrow" />
+        android:drawableEnd="@drawable/back_arrow"
+        app:cornerRadius="30dp" />
 
 
 

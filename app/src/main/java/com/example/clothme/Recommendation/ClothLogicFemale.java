@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.clothme.Database.ClothesDB;
 import com.example.clothme.MainActivity;
@@ -1588,6 +1589,10 @@ public class ClothLogicFemale {
 //        Log.v("BBB1",);
         ArrayList<String> str = new ArrayList<String>();
         str.add("No suitable outerwear");
+        ArrayList<String> strBottom = new ArrayList<String>();
+        strBottom.add("No suitable bottomwear");
+        ArrayList<String> strTop = new ArrayList<String>();
+        strTop.add("No suitable topwear");
 
         ArrayList<String> str1 = new ArrayList<String>();
         str1.add("No bottomwear for current selected topwear");
@@ -1597,119 +1602,109 @@ public class ClothLogicFemale {
         String baseType = "";
         switch (baseOutfit) {
             case "topwear":
-                for (int i = 0; i < toprightwear.size(); i++) {
-                    if (Objects.equals(toprightwear.get(i).get(1), baseoutfitid)) {
-                        base = toprightwear.get(i);
-                        baseType = toprightwear.get(i).get(2);
-                    }
-                }
-                if (outerrightwear.isEmpty()) {
-                    if (Objects.equals(baseType, "Gown") || Objects.equals(baseType, "Long Sleeved Dress") || Objects.equals(baseType, "Short Sleeveless Dress") || Objects.equals(baseType, "Short  Dress") || Objects.equals(baseType, "Long Dress")) {
-                        for (int j = 0; j < toprightwear.size(); j++) {
-                            ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
-                            outfitPairs.add(base);
-                            outfitPairs.add(str1);
-                            outfitPairs.add(str);
-                            outfits.add(outfitPairs);
-                        }
-                    } else {
-                        for (int j = 0; j < bottomrightwear.size(); j++) {
-                            ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
-                            outfitPairs.add(base);
-                            outfitPairs.add(bottomrightwear.get(j));
-                            outfitPairs.add(str);
-                            outfits.add(outfitPairs);
+                if (bottomrightwear.isEmpty()) {
+                    for (int i = 0; i < toprightwear.size(); i++) {
+                        if (Objects.equals(toprightwear.get(i).get(1), baseoutfitid)) {
+                            base = toprightwear.get(i);
+//                            System.out.println(base);
                         }
                     }
-                } else {
-                    if (Objects.equals(baseType, "Gown") || Objects.equals(baseType, "Long Sleeved Dress") || Objects.equals(baseType, "Short Sleeveless Dress") || Objects.equals(baseType, "Short  Dress") || Objects.equals(baseType, "Long Dress")) {
-                        for (int j = 0; j < toprightwear.size(); j++) {
-                            for (int k = 0; k < outerrightwear.size(); k++) {
+                    ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                    outfitPairs.add(base);
+                    outfitPairs.add(strBottom);
+                    outfitPairs.add(str);
+                    outfits.add(outfitPairs);
+                }else{
+                    for (int i = 0; i < toprightwear.size(); i++) {
+                        if (Objects.equals(toprightwear.get(i).get(1), baseoutfitid)) {
+                            base = toprightwear.get(i);
+                            baseType = toprightwear.get(i).get(2);
+                        }
+                    }
+                    if (outerrightwear.isEmpty()) {
+                        if (Objects.equals(baseType, "Gown") || Objects.equals(baseType, "Long Sleeved Dress") || Objects.equals(baseType, "Short Sleeveless Dress") || Objects.equals(baseType, "Short  Dress") || Objects.equals(baseType, "Long Dress")) {
+                            for (int j = 0; j < toprightwear.size(); j++) {
                                 ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
                                 outfitPairs.add(base);
                                 outfitPairs.add(str1);
-                                outfitPairs.add(outerrightwear.get(k));
+                                outfitPairs.add(str);
+                                outfits.add(outfitPairs);
+                            }
+                        } else {
+                            for (int j = 0; j < bottomrightwear.size(); j++) {
+                                ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                                outfitPairs.add(base);
+                                outfitPairs.add(bottomrightwear.get(j));
+                                outfitPairs.add(str);
                                 outfits.add(outfitPairs);
                             }
                         }
                     } else {
-                        for (int j = 0; j < bottomrightwear.size(); j++) {
-                            for (int k = 0; k < outerrightwear.size(); k++) {
-                                ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
-                                outfitPairs.add(base);
-                                outfitPairs.add(bottomrightwear.get(j));
-                                outfitPairs.add(outerrightwear.get(k));
-                                outfits.add(outfitPairs);
+                        if (Objects.equals(baseType, "Gown") || Objects.equals(baseType, "Long Sleeved Dress") || Objects.equals(baseType, "Short Sleeveless Dress") || Objects.equals(baseType, "Short  Dress") || Objects.equals(baseType, "Long Dress")) {
+                            for (int j = 0; j < toprightwear.size(); j++) {
+                                for (int k = 0; k < outerrightwear.size(); k++) {
+                                    ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                                    outfitPairs.add(base);
+                                    outfitPairs.add(str1);
+                                    outfitPairs.add(outerrightwear.get(k));
+                                    outfits.add(outfitPairs);
+                                }
+                            }
+                        } else {
+                            for (int j = 0; j < bottomrightwear.size(); j++) {
+                                for (int k = 0; k < outerrightwear.size(); k++) {
+                                    ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                                    outfitPairs.add(base);
+                                    outfitPairs.add(bottomrightwear.get(j));
+                                    outfitPairs.add(outerrightwear.get(k));
+                                    outfits.add(outfitPairs);
+                                }
                             }
                         }
-                    }
+                }
+
                 }
                 break;
             case "bottomwear":
-                for (int i = 0; i < bottomrightwear.size(); i++) {
-                    if (Objects.equals(bottomrightwear.get(i).get(1), baseoutfitid)) {
-                        base = bottomrightwear.get(i);
-                    }
-                }
-                if (outerrightwear.isEmpty()) {
-                    for (int j = 0; j < toprightwear.size(); j++) {
-                        if (Objects.equals(toprightwear.get(j).get(2), "Gown") || Objects.equals(toprightwear.get(j).get(2), "Long Sleeved Dress") || Objects.equals(toprightwear.get(j).get(2), "Short Sleeveless Dress") || Objects.equals(toprightwear.get(j).get(2), "Short  Dress") || Objects.equals(toprightwear.get(j).get(2), "Long Dress")) {
-                        } else {
-                            ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
-                            outfitPairs.add(toprightwear.get(j));
-                            outfitPairs.add(base);
-                            outfitPairs.add(str);
-                            outfits.add(outfitPairs);
+                if (toprightwear.isEmpty()) {
+//                    for (int i = 0; i < bottomrightwear.size(); i++) {
+                    for (int i = 0; i <bottomrightwear.size(); i++) {
+                        if (Objects.equals(bottomrightwear.get(i).get(1), baseoutfitid)) {
+                            base = bottomrightwear.get(i);
+//                            System.out.println(base);
                         }
                     }
-                } else {
-                    for (int j = 0; j < toprightwear.size(); j++) {
-                        for (int k = 0; k < outerrightwear.size(); k++) {
+                    ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                    outfitPairs.add(strTop);
+                    outfitPairs.add(base);
+                    outfitPairs.add(str);
+                    outfits.add(outfitPairs);
+//                    }
+                }else{
+                    for (int i = 0; i < bottomrightwear.size(); i++) {
+                        if (Objects.equals(bottomrightwear.get(i).get(1), baseoutfitid)) {
+                            base = bottomrightwear.get(i);
+                        }
+                    }
+                    if (outerrightwear.isEmpty()) {
+                        for (int j = 0; j < toprightwear.size(); j++) {
                             if (Objects.equals(toprightwear.get(j).get(2), "Gown") || Objects.equals(toprightwear.get(j).get(2), "Long Sleeved Dress") || Objects.equals(toprightwear.get(j).get(2), "Short Sleeveless Dress") || Objects.equals(toprightwear.get(j).get(2), "Short  Dress") || Objects.equals(toprightwear.get(j).get(2), "Long Dress")) {
                             } else {
                                 ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
                                 outfitPairs.add(toprightwear.get(j));
                                 outfitPairs.add(base);
-                                outfitPairs.add(outerrightwear.get(k));
-                                outfits.add(outfitPairs);
-                            }
-                        }
-                    }
-                }
-                break;
-            case "feelinglucky":
-                if (outerrightwear.isEmpty()) {
-                    for (int i = 0; i < toprightwear.size(); i++) {
-                        for (int j = 0; j < bottomrightwear.size(); j++) {
-                            if (Objects.equals(toprightwear.get(i).get(2), "Gown") || Objects.equals(toprightwear.get(i).get(2), "Long Sleeved Dress") || Objects.equals(toprightwear.get(i).get(2), "Short Sleeveless Dress") || Objects.equals(toprightwear.get(i).get(2), "Short  Dress") || Objects.equals(toprightwear.get(i).get(2), "Long Dress")) {
-                                ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
-                                outfitPairs.add(toprightwear.get(i));
-                                outfitPairs.add(str1);
-                                outfitPairs.add(str);
-                                outfits.add(outfitPairs);
-                            } else {
-                                ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
-                                outfitPairs.add(toprightwear.get(i));
-                                outfitPairs.add(bottomrightwear.get(j));
                                 outfitPairs.add(str);
                                 outfits.add(outfitPairs);
                             }
                         }
-                    }
-                } else {
-                    for (int i = 0; i < toprightwear.size(); i++) {
-                        for (int j = 0; j < bottomrightwear.size(); j++) {
+                    } else {
+                        for (int j = 0; j < toprightwear.size(); j++) {
                             for (int k = 0; k < outerrightwear.size(); k++) {
-                                if (Objects.equals(toprightwear.get(i).get(2), "Gown") || Objects.equals(toprightwear.get(i).get(2), "Long Sleeved Dress") || Objects.equals(toprightwear.get(i).get(2), "Short Sleeveless Dress") || Objects.equals(toprightwear.get(i).get(2), "Short  Dress") || Objects.equals(toprightwear.get(i).get(2), "Long Dress")) {
-                                    ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
-                                    outfitPairs.add(toprightwear.get(i));
-                                    outfitPairs.add(str1);
-                                    outfitPairs.add(outerrightwear.get(k));
-                                    outfits.add(outfitPairs);
+                                if (Objects.equals(toprightwear.get(j).get(2), "Gown") || Objects.equals(toprightwear.get(j).get(2), "Long Sleeved Dress") || Objects.equals(toprightwear.get(j).get(2), "Short Sleeveless Dress") || Objects.equals(toprightwear.get(j).get(2), "Short  Dress") || Objects.equals(toprightwear.get(j).get(2), "Long Dress")) {
                                 } else {
                                     ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
-                                    outfitPairs.add(toprightwear.get(i));
-                                    outfitPairs.add(bottomrightwear.get(j));
+                                    outfitPairs.add(toprightwear.get(j));
+                                    outfitPairs.add(base);
                                     outfitPairs.add(outerrightwear.get(k));
                                     outfits.add(outfitPairs);
                                 }
@@ -1717,6 +1712,72 @@ public class ClothLogicFemale {
                         }
                     }
                 }
+
+                break;
+            case "feelinglucky":
+                if(toprightwear.isEmpty() && bottomrightwear.isEmpty() && outerrightwear.isEmpty()){
+                    Toast.makeText(getContext(),"No items detected, Please add Clothes to your Wardrobe",Toast.LENGTH_SHORT).show();
+                }else{
+                    if (toprightwear.isEmpty()) {
+                        for (int i = 0; i < bottomrightwear.size(); i++) {
+                            ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                            outfitPairs.add(strTop);
+                            outfitPairs.add(bottomrightwear.get(i));
+                            outfitPairs.add(str);
+                            outfits.add(outfitPairs);
+                        }
+                    } else if (bottomrightwear.isEmpty()) {
+                        for (int i = 0; i < toprightwear.size(); i++) {
+                            ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                            outfitPairs.add(toprightwear.get(i));
+                            outfitPairs.add(strBottom);
+                            outfitPairs.add(str);
+                            outfits.add(outfitPairs);
+                        }
+                    }else{
+                        if (outerrightwear.isEmpty()) {
+                            for (int i = 0; i < toprightwear.size(); i++) {
+                                for (int j = 0; j < bottomrightwear.size(); j++) {
+                                    if (Objects.equals(toprightwear.get(i).get(2), "Gown") || Objects.equals(toprightwear.get(i).get(2), "Long Sleeved Dress") || Objects.equals(toprightwear.get(i).get(2), "Short Sleeveless Dress") || Objects.equals(toprightwear.get(i).get(2), "Short  Dress") || Objects.equals(toprightwear.get(i).get(2), "Long Dress")) {
+                                        ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                                        outfitPairs.add(toprightwear.get(i));
+                                        outfitPairs.add(str1);
+                                        outfitPairs.add(str);
+                                        outfits.add(outfitPairs);
+                                    } else {
+                                        ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                                        outfitPairs.add(toprightwear.get(i));
+                                        outfitPairs.add(bottomrightwear.get(j));
+                                        outfitPairs.add(str);
+                                        outfits.add(outfitPairs);
+                                    }
+                                }
+                            }
+                        } else {
+                            for (int i = 0; i < toprightwear.size(); i++) {
+                                for (int j = 0; j < bottomrightwear.size(); j++) {
+                                    for (int k = 0; k < outerrightwear.size(); k++) {
+                                        if (Objects.equals(toprightwear.get(i).get(2), "Gown") || Objects.equals(toprightwear.get(i).get(2), "Long Sleeved Dress") || Objects.equals(toprightwear.get(i).get(2), "Short Sleeveless Dress") || Objects.equals(toprightwear.get(i).get(2), "Short  Dress") || Objects.equals(toprightwear.get(i).get(2), "Long Dress")) {
+                                            ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                                            outfitPairs.add(toprightwear.get(i));
+                                            outfitPairs.add(str1);
+                                            outfitPairs.add(outerrightwear.get(k));
+                                            outfits.add(outfitPairs);
+                                        } else {
+                                            ArrayList<ArrayList<String>> outfitPairs = new ArrayList<ArrayList<String>>();
+                                            outfitPairs.add(toprightwear.get(i));
+                                            outfitPairs.add(bottomrightwear.get(j));
+                                            outfitPairs.add(outerrightwear.get(k));
+                                            outfits.add(outfitPairs);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
                 break;
             default:
                 // code block

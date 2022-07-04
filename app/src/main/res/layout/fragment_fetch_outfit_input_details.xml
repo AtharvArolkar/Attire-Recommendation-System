@@ -49,6 +49,7 @@
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
                     android:background="@drawable/shape" />
             </LinearLayout>
 
@@ -75,8 +76,10 @@
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingRight="5dp">
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/shape1"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/editTextTextPersonName"
@@ -85,8 +88,6 @@
                         android:layout_marginRight="5dp"
 
                         android:layout_weight="2"
-                        android:background="@drawable/shape"
-                        android:ems="10"
                         android:fontFamily="@font/roboto_thin"
                         android:gravity="center"
                         android:hint="Select Location"
@@ -103,9 +104,8 @@
                         android:layout_weight="0.5"
                         android:drawableEnd="@drawable/location"
                         android:gravity="center"
-                        android:text="  "
                         android:textAlignment="center"
-                        app:cornerRadius="20dp" />
+                        app:cornerRadius="50dp" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -134,6 +134,7 @@
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
                     android:background="@drawable/shape"
                     android:fontFamily="@font/roboto_thin"
                     android:gravity="center"
@@ -166,8 +167,8 @@
 
                 <Button
                     android:id="@+id/timePick"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:fontFamily="@font/roboto_thin"
                     android:text="Select Time"
@@ -180,13 +181,23 @@
 
             <Button
                 android:id="@+id/generateOutfit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:fontFamily="@font/roboto_thin"
+                android:backgroundTint="#FFA500"
+                android:fontFamily="@font/days_one"
                 android:text="Generate Outfit"
-                android:textColor="#FBFBFB"
-                android:textStyle="bold" />
+                android:textColor="#1F4690"
+                android:textSize="20sp"
+                app:cornerRadius="10dp"
+                app:strokeColor="#1F4690"
+                app:strokeWidth="1dp" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:background="@color/app_back" />
 
         </LinearLayout>
     </ScrollView>

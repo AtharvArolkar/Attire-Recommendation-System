@@ -51,6 +51,7 @@
                     android:background="@color/green"
                     android:fontFamily="@font/roboto_thin"
                     android:gravity="center|center_vertical"
+                    android:paddingBottom="6dp"
                     android:text="Cloth"
                     android:textColor="@color/white"
                     android:textSize="14sp"
