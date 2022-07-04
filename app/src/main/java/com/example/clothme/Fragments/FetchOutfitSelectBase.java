@@ -85,10 +85,12 @@ public class FetchOutfitSelectBase extends Fragment implements FetchOutfitAdapte
                 if(listOfPairs!=null){
                     b1.putSerializable("ListOfPairs",listOfPairs);
                 }
+                if(!listOfPairs.isEmpty()){
+                    ff.setArguments(b1);
+                    transaction.replace(R.id.linearDisplay, ff);
+                    transaction.commit();
+                }
 
-                ff.setArguments(b1);
-                transaction.replace(R.id.linearDisplay, ff);
-                transaction.commit();
             }
         });
         if(b!=null){
